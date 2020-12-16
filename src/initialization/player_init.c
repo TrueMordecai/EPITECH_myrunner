@@ -7,7 +7,7 @@
 
 #include "runner.h"
 
-entity_t *player_init()
+entity_t *player_init(void)
 {
     entity_t *player = malloc(sizeof(entity_t));
 

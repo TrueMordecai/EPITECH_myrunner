@@ -10,9 +10,9 @@
 
 void map_update(game_t *game)
 {
-    if (INFO->index_under != -1 && game->map[INFO->index_under]->pos.y < BOT_PLAYER_SIDE + PLAYER->vect.y) {
-        PLAYER->vect.y = game->map[INFO->index_under]->pos.y - BOT_PLAYER_SIDE - 133;
-    }
+//    if (INFO->index_under != -1 && game->map[INFO->index_under]->pos.y < BOT_PLAYER_SIDE + PLAYER->vect.y)
+//        PLAYER->vect.y = game->map[INFO->index_under]->pos.y - BOT_PLAYER_SIDE;
+//    my_put_nbr(PLAYER->vect.y);
     for EACH_BLOCK_ON_MAP {
             MAP_ELEMENT->pos.y -= PLAYER->vect.y;
             sfSprite_setPosition(MAP_ELEMENT->sprite, MAP_ELEMENT->pos);
@@ -35,11 +35,15 @@ bool is_align(entity_t *player, entity_t *block)
     if (player->pos.x >= block->pos.x && player->pos.x <= block->pos.x + 128 * 0.4) {
         return (true);
     }
+    if (player->pos.x + player->rect.width * player->scale.x >= block->pos.x && player->pos.x + player->rect.width * player->scale.x <= block->pos.x + 128 * 0.4) {
+        return (true);
+    }
     return (false);
 }
 
 int found_underneath(game_t *game)
 {
+    INFO->index_under = -1;
     for EACH_BLOCK_ON_MAP
         if (is_align(PLAYER, MAP_ELEMENT)) {
             INFO->index_under = i;
@@ -56,30 +60,39 @@ int found_underneath(game_t *game)
     return (INFO->index_under);
 }
 
-
 void player_update(game_t *game)
 {
     found_underneath(game);
-    if (is_in_the_air(game))
-        my_putchar('a');
-    for EACH_BLOCK_ON_MAP
-        if (MAP_ELEMENT->space == false)
-            if (RIGHT_PLAYER_SIDE > LEFT_BLOCK_SIDE && ((BOT_PLAYER_SIDE > TOP_BLOCK_SIDE && BOT_PLAYER_SIDE < BOT_X_BLOCK_SIDE) || (TOP_PLAYER_SIDE < TOP_BLOCK_SIDE && TOP_PLAYER_SIDE > BOT_X_BLOCK_SIDE)))
-                my_putstr("DEAD!!!\n");
 
-    if (is_in_the_air(game)) {
-        map_update(game);
+    if (is_in_the_air(game) || INPUT->jump_state == PRESS)
         PLAYER->vect.y += 1;
-    } else {
-        PLAYER->vect.y = 2;
-    }
+    else
+        PLAYER->vect.y = 0;
+    map_update(game);
     sfSprite_setPosition(PLAYER->sprite, PLAYER->pos);
 }
 
 void player_display(game_t *game)
 {
+    if (INPUT->jump_state == PRESS && is_in_the_air(game) == false)
+        PLAYER->vect.y -= 20;
     player_update(game);
     sfRenderWindow_drawSprite(RENDER_WINDOW, game->player->sprite, NULL);
+}
+
+void get_input(game_t *game)
+{
+
+    if (sfKeyboard_isKeyPressed(INPUT->jump_key) && is_in_the_air(game) == false)
+        INPUT->jump_state = PRESS;
+    else
+        INPUT->jump_state = UNPRESS;
+/*    if (INPUT->jump_state == PRESS && sfKeyboard_isKeyPressed(INPUT->jump_key))
+        INPUT->jump_state = ALREADY_PRESS;
+    if (sfKeyboard_isKeyPressed(INPUT->jump_key) && INPUT->jump_state != ALREADY_PRESS)
+        INPUT->jump_state = PRESS;
+    if (sfKeyboard_isKeyPressed(INPUT->jump_key) == sfFalse)
+        INPUT->jump_state = UNPRESS;*/
 }
 
 void map_display(game_t *game)
@@ -99,6 +112,7 @@ int main_loop(void)
         return (0);
 
     while (sfKeyboard_isKeyPressed(sfKeyQ) == sfFalse) {
+        get_input(game);
         player_display(game);
         map_display(game);
         sfRenderWindow_display(RENDER_WINDOW);

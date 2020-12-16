@@ -18,5 +18,6 @@ game_t *game_init(void)
     game->player = player_init();
     game->map = map_init();
     game->info = map_info_init();
+    game->input = input_init();
     return (game);
 }

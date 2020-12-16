@@ -31,6 +31,11 @@
 #define PLAYER game->player
 #define MAP_ELEMENT game->map[i]
 #define INFO game->info
+#define INPUT game->input
+
+/// Default key
+#define DEFAULT_JUMP sfKeySpace
+
 
 /// Core Information Macro
 #define RESOLUTION_X 1920
@@ -56,8 +61,21 @@
 #define EACH_BLOCK_ON_MAP (uint i = 0; game->map[i] != 0; i++)
 
 /// In Game Information
-#define SPEED 4
+#define SPEED 8
 
+
+/// Enum for state of the button, PRESS is only for one loop.
+typedef enum {
+    UNPRESS = 0,
+    PRESS,
+    ALREADY_PRESS,
+    END_BUTTON_STATE_T,
+} button_state_t;
+
+typedef struct input_s {
+    button_state_t jump_state;
+    sfKeyCode jump_key;
+} input_t;
 
 typedef struct core_s {
     sfRenderWindow *window;
@@ -87,12 +105,14 @@ typedef struct game_s {
     entity_t **map;
     entity_t *player;
     map_info_t *info;
+    input_t *input;
 } game_t;
 
 core_t *core_init(void);
 game_t *game_init(void);
-entity_t *player_init();
+entity_t *player_init(void);
 entity_t **map_init(void);
+input_t *input_init(void);
 map_info_t *map_info_init(void);
 
 sfVector2f vector2i_to_vector2f(sfVector2i vect);

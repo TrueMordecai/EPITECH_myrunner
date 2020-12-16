@@ -13,6 +13,7 @@ SRC			=		src/main/main.c								\
 					src/initialization/player_init.c			\
 					src/initialization/map_init.c				\
 					src/initialization/map_info_init.c			\
+					src/initialization/input_init.c				\
 					src/game_loop/main_loop.c					\
 					src/tool/tool_func.c
 
