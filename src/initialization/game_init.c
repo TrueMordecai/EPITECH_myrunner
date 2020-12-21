@@ -13,11 +13,13 @@
 game_t *game_init(void)
 {
     game_t *game = malloc(sizeof(game_t));
+    char *map = file_read("./map");
 
     game->core = core_init();
     game->player = player_init();
-    game->map = map_init();
-    game->info = map_info_init();
+    game->info = map_info_init(map);
+    game->map = map_init(map, INFO->starting_position);
     game->input = input_init();
+    free(map);
     return (game);
 }

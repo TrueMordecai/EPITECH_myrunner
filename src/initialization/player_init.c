@@ -12,14 +12,10 @@ entity_t *player_init(void)
     entity_t *player = malloc(sizeof(entity_t));
 
     player->sprite = sfSprite_create();
-    player->scale = vector_create(0.5, 0.5);
-    player->rect = rect_create(0, 0, 121, 121);
-    player->texture = sfTexture_createFromFile("image/cube.png", NULL);
-    player->pos = vector_create(300, 700);
-    player->vect = vector_create(SPEED, 2);
+    player->texture = sfTexture_createFromFile(PLAYER_TEXTURE_PATH, NULL);
+    player->pos = vector_create(BASIC_PLAYER_X_POSITION, BASIC_PLAYER_Y_POSITION);
+    player->vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
     sfSprite_setTexture(player->sprite, player->texture, sfTrue);
-    sfSprite_setScale(player->sprite, player->scale);
-    sfSprite_setTextureRect(player->sprite, player->rect);
     sfSprite_setPosition(player->sprite, player->pos);
     return (player);
 }

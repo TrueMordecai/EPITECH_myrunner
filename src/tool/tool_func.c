@@ -7,6 +7,18 @@
 
 #include "runner.h"
 
+char *file_read(char const *path)
+{
+    int fd = open(path, O_RDONLY);
+    char *map = NULL;
+    struct stat buf;
+    stat(path, &buf);
+    map = malloc(sizeof(char) * (buf.st_size + 1));
+    read(fd, map, buf.st_size);
+    map[buf.st_size] = '\0';
+    return (map);
+}
+
 sfVector2f vector2i_to_vector2f(sfVector2i vect)
 {
     sfVector2f nvect;

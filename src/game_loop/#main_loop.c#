@@ -8,14 +8,6 @@
 #include "runner.h"
 #include <stdio.h>
 
-bool is_in_the_air(game_t *game)
-{
-    for EACH_BLOCK_ON_MAP { /// THE IF IS TRUE IF PLAYER IS ON A BLOCK
-            if (BLOCK->space == false && PLAYER_BOT_SIDE == BLOCK_TOP_SIDE && is_align(PLAYER, BLOCK)) {
-
-            }
-        }
-}
 bool is_align(entity_t *player, entity_t *block)
 {
     if (block->space == true)
@@ -25,6 +17,15 @@ bool is_align(entity_t *player, entity_t *block)
     return (false);
 }
 
+bool is_in_the_air(game_t *game)
+{
+    for EACH_BLOCK_ON_MAP { /// THE IF IS TRUE IF PLAYER IS ON A BLOCK
+            if (BLOCK->space == false && PLAYER_BOT_SIDE == BLOCK_TOP_SIDE && is_align(PLAYER, BLOCK)) {
+                return (true);
+            }
+        }
+    return (false);
+}
 
 /*
 void found_underneath(game_t *game)

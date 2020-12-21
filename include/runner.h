@@ -25,44 +25,54 @@
 #include <unistd.h>
 #include "my.h"
 
-///  Quality Of Life Macro
+/// -------- /!\ QoL : Access principals structure. USE ONLY WITH PARAMETER GAME
 #define CORE game->core
 #define RENDER_WINDOW game->core->window
 #define PLAYER game->player
-#define MAP_ELEMENT game->map[i]
 #define INFO game->info
 #define INPUT game->input
+/// ------------------------------------
 
-/// Default key
+/// -------- /!\ QoL : Access player informations. USE ONLY WITH PARAMETER GAME
+#define PLAYER_X_SPEED (game->player->vect.x)
+#define PLAYER_Y_SPEED (game->player->vect.y)
+#define PLAYER_LEFT_SIDE (game->player->pos.x)
+#define PLAYER_RIGHT_SIDE (game->player->pos.x + 128)
+#define PLAYER_TOP_SIDE (game->player->pos.y)
+#define PLAYER_BOT_SIDE (game->player->pos.y + 128)
+/// ------------------------------------
+
+/// -------- /!\ QoL : Access block informations. USE ONLY WITH PARAMETER GAME
+#define EACH_BLOCK_ON_MAP (uint i = 0; game->map[i] != NULL; i++)
+/// Use the macro below in a "for" loop pair with the macor above
+#define BLOCK game->map[i]
+#define BLOCK_LEFT_SIDE (game->map[i]->pos.x)
+#define BLOCK_RIGHT_SIDE (game->map[i]->pos.x + 128)
+#define BLOCK_TOP_SIDE (game->map[i]->pos.y)
+#define BLOCK_BOT_SIDE (game->map[i]->pos.y + 128)
+#define BLOCK_IS_NOT_SPACE game->map[i]->space == false
+#define BLOCK_IS_SPACE game->map[i]->space == true
+/// ------------------------------------
+
+
+/// -------- /!\ Information for initialization
+#define BASIC_PLAYER_X_SPEED 8
+#define BASIC_PLAYER_Y_SPEED 5
+#define BASIC_PLAYER_X_POSITION 300
+#define BASIC_PLAYER_Y_POSITION 700
+#define PLAYER_TEXTURE_PATH "image/cube.png"
+/// ------------------------------------
+
+
+/// -------- /!\ Default key
 #define DEFAULT_JUMP sfKeySpace
+/// ------------------------------------
 
-
-/// Core Information Macro
+/// -------- /!\ Core Information Macro
 #define RESOLUTION_X 1920
 #define RESOLUTION_Y 1080
 #define FRAME_RATE 60
-
-/// Basic Information Macro
-#define MAP_SCALE 0.4
-
-/// Side Player Macro (QoL)
-#define LEFT_PLAYER_SIDE game->player->pos.x
-#define RIGHT_PLAYER_SIDE game->player->pos.x + (game->player->scale.x * game->player->rect.width)
-#define TOP_PLAYER_SIDE game->player->pos.y
-#define BOT_PLAYER_SIDE game->player->pos.y + (game->player->scale.y * game->player->rect.height)
-
-/// Side Block Macro (QoL)
-#define LEFT_BLOCK_SIDE game->map[i]->pos.x
-#define RIGHT_BLOCK_SIDE game->map[i]->pos.x + (game->map[i]->scale.x * 128)
-#define TOP_BLOCK_SIDE game->map[i]->pos.y
-#define BOT_X_BLOCK_SIDE game->map[i]->pos.y + (game->map[i]->scale.y * 128)
-
-/// Other QoL Macro
-#define EACH_BLOCK_ON_MAP (uint i = 0; game->map[i] != 0; i++)
-
-/// In Game Information
-#define SPEED 8
-
+/// ------------------------------------
 
 /// Enum for state of the button, PRESS is only for one loop.
 typedef enum {
@@ -85,6 +95,7 @@ typedef struct core_s {
 
 typedef struct map_info_s {
     int index_under;
+    sfVector2f starting_position;
 } map_info_t;
 
 typedef struct entity_s {
@@ -111,10 +122,11 @@ typedef struct game_s {
 core_t *core_init(void);
 game_t *game_init(void);
 entity_t *player_init(void);
-entity_t **map_init(void);
+entity_t **map_init(char const *map, sfVector2f starting_position);
 input_t *input_init(void);
-map_info_t *map_info_init(void);
+map_info_t *map_info_init(char const *map);
 
+char *file_read(char const *path);
 sfVector2f vector2i_to_vector2f(sfVector2i vect);
 sfColor color_create(uint r, uint g, uint b, uint a);
 sfVector2f vector_create(float x, float y);
