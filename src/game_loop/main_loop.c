@@ -22,7 +22,7 @@ void reset_map(game_t *game)
         }
         col++;
     }
-    PLAYER->vect = vector_create(PLAYER_X_SPEED, PLAYER_Y_SPEED);
+    PLAYER->vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
     sfSprite_setPosition(BACKGROUND->sprite, vector_create(0, 0));
 }
 
@@ -89,10 +89,9 @@ void map_display_update(game_t *game)
     if (!is_in_the_air(game)) {
         PLAYER_Y_SPEED = 0;
         sfSprite_setRotation(PLAYER->sprite, 0);
-        if (INPUT->jump_state == PRESS) {
+        if (INPUT->jump_state == PRESS)
             PLAYER_Y_SPEED -= BASIC_PLAYER_JUMP_HEIGHT;
-        }
-    } else
+    }
     gravity_update(game);
     for EACH_BLOCK_ON_MAP { /// LOOP IF PLAYER OVEREXTEND IN A BLOCK
             if (BLOCK->space == false && PLAYER_BOT_SIDE + PLAYER_Y_SPEED > BLOCK_TOP_SIDE && PLAYER_BOT_SIDE < BLOCK_BOT_SIDE && is_align(PLAYER, BLOCK))
@@ -102,15 +101,24 @@ void map_display_update(game_t *game)
         BLOCK->pos.y -= PLAYER_Y_SPEED;
 }
 
+void map_display_enlighten(game_t *game, entity_t *block)
+{
+    if (block->type != BT_BASIC)
+        return;
+    sfSprite_setPosition(INFO->enlight_block->sprite, vector_create(block->pos.x - 2, block->pos.y - 2));
+    sfRenderWindow_drawSprite(RENDER_WINDOW, INFO->enlight_block->sprite, NULL);
+}
+
 void map_display(game_t *game)
 {
     map_display_update(game);
 
     for EACH_BLOCK_ON_MAP {
-        game->map[i]->pos.x -= PLAYER_X_SPEED;
-        sfSprite_setPosition(game->map[i]->sprite, game->map[i]->pos);
-        sfRenderWindow_drawSprite(RENDER_WINDOW, game->map[i]->sprite, NULL);
-    }
+            game->map[i]->pos.x -= PLAYER_X_SPEED;
+            map_display_enlighten(game, BLOCK);
+            sfSprite_setPosition(game->map[i]->sprite, game->map[i]->pos);
+            sfRenderWindow_drawSprite(RENDER_WINDOW, game->map[i]->sprite, NULL);
+        }
 }
 
 void background_display(game_t *game)

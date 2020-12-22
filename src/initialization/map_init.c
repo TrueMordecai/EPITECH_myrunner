@@ -95,6 +95,16 @@ char *my_strdup(char *str)
     nstr[my_strlen(str)] = '\0';
     return (nstr);
 }
+void map_init_set_element(entity_t *block, sfTexture *texture, sfColor color, block_type_t btype)
+{
+    sfSprite_setTexture(block->sprite, texture, sfTrue);
+    block->type = btype;
+    if (btype < BT_DELIMITER)
+        block->space = false;
+    else
+        block->space = true;
+    sfSprite_setColor(block->sprite, color);
+}
 
 entity_t **map_init(char *map, sfVector2f starting_position)
 {
@@ -103,22 +113,22 @@ entity_t **map_init(char *map, sfVector2f starting_position)
     uint line = 1;
     sfTexture *block_texture = sfTexture_createFromFile("image/basic.png", NULL);
     sfTexture *brick0_texture = sfTexture_createFromFile("image/brick0-tileset.png", NULL);
+    sfTexture *spike_texture = sfTexture_createFromFile("image/spike.png", NULL);
     char **map_array = str_to_array(my_strdup(map));
 
     for (uint i = 0; map[i] != '\0'; i++) {
         block[i] = malloc(sizeof(entity_t));
         block[i]->sprite = sfSprite_create();
         block[i]->space = true;
-        if (map[i] == '*') {
-            sfSprite_setTexture(block[i]->sprite, block_texture, sfTrue);
-            block[i]->space = false;
-        }
+        block[i]->type = BT_SPACE;
+        if (map[i] == '*')
+            map_init_set_element(block[i], block_texture, color_create(255, 20, 190, 150), BT_BASIC);
         if (map[i] == 'o') {
-            sfSprite_setTexture(block[i]->sprite, brick0_texture, sfTrue);
-              sfSprite_setTextureRect(block[i]->sprite, map_init_tileset(map_array, col - 1, line - 1));
-          block[i]->space = false;
+            map_init_set_element(block[i], brick0_texture, color_create(255, 20, 190, 245), BT_BRICK);
+            sfSprite_setTextureRect(block[i]->sprite, map_init_tileset(map_array, col - 1, line - 1));
         }
-        sfSprite_setColor(block[i]->sprite, color_create(255, 100, 100, 255));
+        if (map[i] == 'x')
+            map_init_set_element(block[i], spike_texture, color_create(10, 10, 10, 255), BT_SPIKE);
         block[i]->pos = vector_create((col * 128) + (300 - 128) - starting_position.x * 128,
                                       (line * 128) + (700 - 128) - starting_position.y * 128);
         sfSprite_setPosition(block[i]->sprite, block[i]->pos);

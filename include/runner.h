@@ -99,6 +99,14 @@ typedef enum {
     END_BUTTON_STATE_T,
 } button_state_t;
 
+typedef enum {
+    BT_BASIC = 0,
+    BT_BRICK,
+    BT_DELIMITER,
+    BT_SPIKE,
+    BT_SPACE,
+} block_type_t;
+
 typedef struct input_s {
     button_state_t jump_state;
     sfKeyCode jump_key;
@@ -110,12 +118,6 @@ typedef struct core_s {
     sfEvent event;
 } core_t;
 
-typedef struct map_info_s {
-    char const *map;
-    int index_under;
-    sfVector2f starting_position;
-} map_info_t;
-
 typedef struct entity_s {
     sfTexture *texture;
     sfSprite *sprite;
@@ -123,11 +125,19 @@ typedef struct entity_s {
     sfVector2f scale;
     sfIntRect rect;
     sfVector2f vect;
+    block_type_t type;
     sfTime time;
     sfClock *clock;
     float seconds;
     bool space;
 } entity_t;
+
+typedef struct map_info_s {
+    char const *map;
+    int index_under;
+    sfVector2f starting_position;
+    entity_t *enlight_block;
+} map_info_t;
 
 typedef struct game_s {
     core_t *core;
