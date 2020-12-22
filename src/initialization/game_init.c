@@ -20,6 +20,6 @@ game_t *game_init(void)
     game->info = map_info_init(map);
     game->map = map_init(map, INFO->starting_position);
     game->input = input_init();
-    free(map);
+    game->background = background_init();
     return (game);
 }

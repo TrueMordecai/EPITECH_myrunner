@@ -31,6 +31,7 @@
 #define PLAYER game->player
 #define INFO game->info
 #define INPUT game->input
+#define BACKGROUND game->background
 /// ------------------------------------
 
 /// -------- /!\ QoL : Access player informations. USE ONLY WITH PARAMETER GAME
@@ -42,9 +43,17 @@
 #define PLAYER_BOT_SIDE (game->player->pos.y + 128)
 /// ------------------------------------
 
+/// -------- /!\ QoL : Fast access to map elements during initialization
+/// Only used for initialized brick rect. USE ONLY WITH PARAMETER map, x, y
+#define NORTH map, y - 1, x
+#define EAST  map, y, x + 1
+#define SOUTH map, y + 1, x
+#define WEST  map, y, x - 1
+/// ------------------------------------
+
 /// -------- /!\ QoL : Access block informations. USE ONLY WITH PARAMETER GAME
 #define EACH_BLOCK_ON_MAP (uint i = 0; game->map[i] != NULL; i++)
-/// Use the macro below in a "for" loop pair with the macor above
+/// Use the macro below in a "for" loop pair with the macro above
 #define BLOCK game->map[i]
 #define BLOCK_LEFT_SIDE (game->map[i]->pos.x)
 #define BLOCK_RIGHT_SIDE (game->map[i]->pos.x + 128)
@@ -55,11 +64,19 @@
 /// ------------------------------------
 
 
-/// -------- /!\ Information for initialization
-#define BASIC_PLAYER_X_SPEED 8
-#define BASIC_PLAYER_Y_SPEED 5
-#define BASIC_PLAYER_X_POSITION 300
-#define BASIC_PLAYER_Y_POSITION 700
+/// -------- /!\ Information for the game
+#define BASIC_PLAYER_X_SPEED 18
+#define BASIC_PLAYER_Y_SPEED 0
+#define BASIC_PLAYER_JUMP_HEIGHT 30
+#define BASIC_PLAYER_GRAVITY 1.5
+#define BASIC_PLAYER_MAX_GRAVITY 30
+#define BASIC_PLAYER_X_POSITION 400
+#define BASIC_PLAYER_Y_POSITION 600
+#define BACKGROUND_SCALE 2, 2
+#define LARGE_BACKGROUND_RECT 0, 0, 10000, 10000
+#define BACKGROUND_STARTING_POS 0, 0
+#define BLOCK_SIZE 128
+#define PLAYER_SIZE 128
 #define PLAYER_TEXTURE_PATH "image/cube.png"
 /// ------------------------------------
 
@@ -94,6 +111,7 @@ typedef struct core_s {
 } core_t;
 
 typedef struct map_info_s {
+    char const *map;
     int index_under;
     sfVector2f starting_position;
 } map_info_t;
@@ -113,6 +131,7 @@ typedef struct entity_s {
 
 typedef struct game_s {
     core_t *core;
+    entity_t *background;
     entity_t **map;
     entity_t *player;
     map_info_t *info;
@@ -122,9 +141,10 @@ typedef struct game_s {
 core_t *core_init(void);
 game_t *game_init(void);
 entity_t *player_init(void);
-entity_t **map_init(char const *map, sfVector2f starting_position);
+entity_t **map_init(char *map, sfVector2f starting_position);
 input_t *input_init(void);
 map_info_t *map_info_init(char const *map);
+entity_t *background_init(void);
 
 char *file_read(char const *path);
 sfVector2f vector2i_to_vector2f(sfVector2i vect);

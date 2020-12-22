@@ -26,6 +26,7 @@ map_info_t *map_info_init(char const *map)
     map_info_t *info = malloc(sizeof(map_info_t));
 
     info->starting_position = starting_position_get(map);
+    info->map = map;
     info->index_under = 0;
     return (info);
 }
