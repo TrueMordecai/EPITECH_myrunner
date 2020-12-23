@@ -114,6 +114,7 @@ entity_t **map_init(char *map, sfVector2f starting_position)
     sfTexture *block_texture = sfTexture_createFromFile("image/basic.png", NULL);
     sfTexture *brick0_texture = sfTexture_createFromFile("image/brick0-tileset.png", NULL);
     sfTexture *spike_texture = sfTexture_createFromFile("image/spike.png", NULL);
+    sfTexture *wall_texture = sfTexture_createFromFile("image/brickwall.png", NULL);
     char **map_array = str_to_array(my_strdup(map));
 
     for (uint i = 0; map[i] != '\0'; i++) {
@@ -127,10 +128,12 @@ entity_t **map_init(char *map, sfVector2f starting_position)
             map_init_set_element(block[i], brick0_texture, color_create(255, 20, 190, 245), BT_BRICK);
             sfSprite_setTextureRect(block[i]->sprite, map_init_tileset(map_array, col - 1, line - 1));
         }
+        if (map[i] == 'w')
+            map_init_set_element(block[i], wall_texture, color_create(255, 150, 255, 100), BT_WALL);
         if (map[i] == 'x')
             map_init_set_element(block[i], spike_texture, color_create(10, 10, 10, 255), BT_SPIKE);
-        block[i]->pos = vector_create((col * 128) + (300 - 128) - starting_position.x * 128,
-                                      (line * 128) + (700 - 128) - starting_position.y * 128);
+        block[i]->pos = vector_create((col * 128) + (400 - 128) - starting_position.x * 128,
+                                      (line * 128) + (600 - 128) - starting_position.y * 128);
         sfSprite_setPosition(block[i]->sprite, block[i]->pos);
         if (map[i] == '\n') {
             line++;

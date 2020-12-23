@@ -83,6 +83,8 @@
 
 /// -------- /!\ Default key
 #define DEFAULT_JUMP sfKeySpace
+#define DEFAULT_RESTART sfKeyR
+#define DEFAULT_QUIT sfKeyQ
 /// ------------------------------------
 
 /// -------- /!\ Core Information Macro
@@ -99,18 +101,20 @@ typedef enum {
     END_BUTTON_STATE_T,
 } button_state_t;
 
+/// Enum for the block type. Value below delimiter have a phisical hitbox.
 typedef enum {
     BT_BASIC = 0,
     BT_BRICK,
     BT_DELIMITER,
     BT_SPIKE,
+    BT_WALL,
     BT_SPACE,
 } block_type_t;
 
-typedef struct input_s {
-    button_state_t jump_state;
-    sfKeyCode jump_key;
-} input_t;
+typedef struct key_input_s {
+    button_state_t key_state;
+    sfKeyCode key_code;
+} key_input_t;
 
 typedef struct core_s {
     sfRenderWindow *window;
@@ -139,6 +143,12 @@ typedef struct map_info_s {
     entity_t *enlight_block;
 } map_info_t;
 
+typedef struct input_s {
+    key_input_t *jump;
+    key_input_t *reset;
+    key_input_t *quit;
+} input_t;
+
 typedef struct game_s {
     core_t *core;
     entity_t *background;
@@ -161,6 +171,17 @@ sfVector2f vector2i_to_vector2f(sfVector2i vect);
 sfColor color_create(uint r, uint g, uint b, uint a);
 sfVector2f vector_create(float x, float y);
 sfIntRect rect_create(int top, int left, int height, int width);
+
+void map_display(game_t *game);
+void background_display(game_t *game);
+void player_display(game_t *game);
+void gravity_update(game_t *game);
+
+void input_index(game_t *game);
+
+bool is_align(entity_t *player, entity_t *block);
+bool is_player_dead(game_t *game);
+bool is_in_the_air(game_t *game);
 
 int main_loop(void);
 void game_destroy(game_t *game);
