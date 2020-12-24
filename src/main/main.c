@@ -35,7 +35,9 @@ static int main_print_help()
     my_putstr(" no physical hitbox\n");
     my_putstr("        w - Wall in the background, for decoration only, no ");
     my_putstr("physical hitbox\n");
-    my_putstr("        All other character a considered empty space\n");
+    my_putstr("        J - Jumping orb, no physical hitbox\n");
+    my_putstr("        C - Coin to collect, no physical hitbox, DON'T USE THEY ARE NOT WORKING\n");
+    my_putstr("        All other character a considered empty space\n\n");
     main_print_help_map_exemple();
     return (0);
 }

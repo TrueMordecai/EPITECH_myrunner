@@ -12,7 +12,7 @@ static void map_display_update(game_t *game)
     if (!is_in_the_air(game)) {
         PLAYER_Y_SPEED = 0;
         sfSprite_setRotation(PLAYER->sprite, 0);
-        if (INPUT->jump->key_state == PRESS && !is_in_the_air(game))
+        if ((INPUT->jump->key_state == PRESS ||  INPUT->jump->key_state == ALREADY_PRESS) && !is_in_the_air(game))
             PLAYER_Y_SPEED -= BASIC_PLAYER_JUMP_HEIGHT;
     }
     gravity_update(game);
@@ -21,7 +21,8 @@ static void map_display_update(game_t *game)
                 PLAYER_Y_SPEED = BLOCK_TOP_SIDE - PLAYER_BOT_SIDE;
         }
     for EACH_BLOCK_ON_MAP /// LOOP APLYING GRAVITY TO BLOCK
-        BLOCK->pos.y -= PLAYER_Y_SPEED;
+        if (BLOCK->type != BT_SPE_COINS_FOUND)
+            BLOCK->pos.y -= PLAYER_Y_SPEED;
 }
 
 static void map_display_enlighten(game_t *game, entity_t *block)
@@ -33,7 +34,7 @@ static void map_display_enlighten(game_t *game, entity_t *block)
 
 static void map_display_disapear_effect(entity_t *block)
 {
-    if (block->pos.x >= 150 || block->type == BT_SPACE)
+    if (block->pos.x >= 150 || block->type == BT_SPACE || block->type == BT_SPE_COINS_FOUND)
         return;
     if (block->pos.y < 500)
         block->pos.y -= 20;
@@ -47,7 +48,8 @@ void map_display(game_t *game)
     map_display_update(game);
 
     for EACH_BLOCK_ON_MAP {
-            game->map[i]->pos.x -= PLAYER_X_SPEED;
+            if (BLOCK->type != BT_SPE_COINS_FOUND)
+                BLOCK->pos.x -= PLAYER_X_SPEED;
             special_block_apply(game, BLOCK);
             map_display_disapear_effect(BLOCK);
             map_display_enlighten(game, BLOCK);

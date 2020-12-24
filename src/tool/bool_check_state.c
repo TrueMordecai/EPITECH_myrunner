@@ -21,8 +21,17 @@ bool is_align(entity_t *player, entity_t *block)
 
 bool is_player_in_block(entity_t *player, entity_t *block)
 {
+    if (player->pos.x > block->pos.x && player->pos.x + 128 < block->pos.x)
+        if (player->pos.y >= block->pos.y && player->pos.y <= block->pos.y + 128)
+            return (true);
     if (player->pos.x + 128 >= block->pos.x && player->pos.x + 128 <= block->pos.x + 128)
         if (player->pos.y >= block->pos.y && player->pos.y <= block->pos.y + 128)
+            return (true);
+    if (player->pos.x > block->pos.x && player->pos.x + 128 < block->pos.x)
+        if (player->pos.y + 128 >= block->pos.y && player->pos.y + 128 <= block->pos.y + 128)
+            return (true);
+    if (player->pos.x + 128 >= block->pos.x && player->pos.x + 128 <= block->pos.x + 128)
+        if (player->pos.y + 128 >= block->pos.y && player->pos.y + 128 <= block->pos.y + 128)
             return (true);
     return (false);
 }

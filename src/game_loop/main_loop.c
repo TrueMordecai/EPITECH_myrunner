@@ -19,6 +19,8 @@ void reset_map(game_t *game)
         sfSprite_setScale(BLOCK->sprite, vector_create(1, 1));
         if (BLOCK->type == BT_SPE_SPEED_DOWN_USED || BLOCK->type == BT_SPE_SPEED_UP_USED)
             BLOCK->type--;
+        if (BLOCK->type == BT_SPE_COINS_FOUND)
+            BLOCK->type = BT_SPE_COINS;
         if (game->info->map[i] == '\n') {
             line++;
             col = 0;

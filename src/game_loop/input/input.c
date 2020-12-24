@@ -9,10 +9,15 @@
 
 void get_input(key_input_t *key)
 {
+    if (sfKeyboard_isKeyPressed(key->key_code) == sfTrue && (key->key_state == PRESS || key->key_state == ALREADY_PRESS)) {
+        key->key_state = ALREADY_PRESS;
+        return;
+    }
     if (sfKeyboard_isKeyPressed(key->key_code) == sfTrue) {
         key->key_state = PRESS;
-    } else
+    } else {
         key->key_state = UNPRESS;
+    }
 }
 
 void input_index(game_t *game)

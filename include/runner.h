@@ -115,6 +115,9 @@ typedef enum {
     BT_SPE_SPEED_UP_USED,
     BT_SPE_SPEED_DOWN,
     BT_SPE_SPEED_DOWN_USED,
+    BT_SPE_JUMPER_ORB,
+    BT_SPE_COINS,
+    BT_SPE_COINS_FOUND,
 } block_type_t;
 
 typedef struct key_input_s {
