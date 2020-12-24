@@ -29,9 +29,9 @@ void reset_map(game_t *game)
     sfSprite_setPosition(BACKGROUND->sprite, vector_create(0, 0));
 }
 
-int main_loop(void)
+int main_loop(char const *path)
 {
-    game_t *game = game_init();
+    game_t *game = game_init(path);
 
     if (!game)
         return (0);

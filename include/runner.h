@@ -165,12 +165,14 @@ typedef struct game_s {
 } game_t;
 
 core_t *core_init(void);
-game_t *game_init(void);
+game_t *game_init(char const *path);
 entity_t *player_init(void);
 entity_t **map_init(char *map, sfVector2f starting_position);
 input_t *input_init(void);
 map_info_t *map_info_init(char const *map);
 entity_t *background_init(void);
+
+bool is_error_map(char const *map);
 
 char *file_read(char const *path);
 sfVector2f vector2i_to_vector2f(sfVector2i vect);
@@ -190,7 +192,7 @@ bool is_player_dead(game_t *game);
 bool is_in_the_air(game_t *game);
 bool is_player_in_block(entity_t *player, entity_t *block);
 
-int main_loop(void);
+int main_loop(char const *path);
 void special_block_apply(game_t *game, entity_t *block);
 void game_destroy(game_t *game);
 

@@ -12,6 +12,9 @@ char *file_read(char const *path)
     int fd = open(path, O_RDONLY);
     char *map = NULL;
     struct stat buf;
+
+    if (fd == -1)
+        return (NULL);
     stat(path, &buf);
     map = malloc(sizeof(char) * (buf.st_size + 1));
     read(fd, map, buf.st_size);
