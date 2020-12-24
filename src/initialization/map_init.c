@@ -103,7 +103,8 @@ void map_init_set_element(entity_t *block, sfTexture *texture, sfColor color, bl
         block->space = false;
     else
         block->space = true;
-    sfSprite_setColor(block->sprite, color);
+    if (btype < BT_DELIMITER_SPE || color.a + color.b + color.g + color.r == 0)
+        sfSprite_setColor(block->sprite, color);
 }
 
 entity_t **map_init(char *map, sfVector2f starting_position)
@@ -115,6 +116,8 @@ entity_t **map_init(char *map, sfVector2f starting_position)
     sfTexture *brick0_texture = sfTexture_createFromFile("image/brick0-tileset.png", NULL);
     sfTexture *spike_texture = sfTexture_createFromFile("image/spike.png", NULL);
     sfTexture *wall_texture = sfTexture_createFromFile("image/brickwall.png", NULL);
+    sfTexture *speedup_texture = sfTexture_createFromFile("image/speed_up.png", NULL);
+    sfTexture *speeddown_texture = sfTexture_createFromFile("image/speed_down.png", NULL);
     char **map_array = str_to_array(my_strdup(map));
 
     for (uint i = 0; map[i] != '\0'; i++) {
@@ -132,6 +135,10 @@ entity_t **map_init(char *map, sfVector2f starting_position)
             map_init_set_element(block[i], wall_texture, color_create(255, 150, 255, 100), BT_WALL);
         if (map[i] == 'x')
             map_init_set_element(block[i], spike_texture, color_create(10, 10, 10, 255), BT_SPIKE);
+        if (map[i] == '>')
+            map_init_set_element(block[i], speedup_texture, color_create(0, 0, 0, 255), BT_SPE_SPEED_UP);
+        if (map[i] == '<')
+            map_init_set_element(block[i], speeddown_texture, color_create(0, 0, 0, 255), BT_SPE_SPEED_DOWN);
         block[i]->pos = vector_create((col * 128) + (400 - 128) - starting_position.x * 128,
                                       (line * 128) + (600 - 128) - starting_position.y * 128);
         sfSprite_setPosition(block[i]->sprite, block[i]->pos);

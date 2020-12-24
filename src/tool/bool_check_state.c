@@ -19,6 +19,14 @@ bool is_align(entity_t *player, entity_t *block)
     return (false);
 }
 
+bool is_player_in_block(entity_t *player, entity_t *block)
+{
+    if (player->pos.x + 128 >= block->pos.x && player->pos.x + 128 <= block->pos.x + 128)
+        if (player->pos.y >= block->pos.y && player->pos.y <= block->pos.y + 128)
+            return (true);
+    return (false);
+}
+
 bool is_player_dead(game_t *game)
 {
     for EACH_BLOCK_ON_MAP {

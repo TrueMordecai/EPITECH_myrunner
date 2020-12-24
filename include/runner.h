@@ -65,9 +65,9 @@
 
 
 /// -------- /!\ Information for the game
-#define BASIC_PLAYER_X_SPEED 18
+#define BASIC_PLAYER_X_SPEED 20
 #define BASIC_PLAYER_Y_SPEED 0
-#define BASIC_PLAYER_JUMP_HEIGHT 30
+#define BASIC_PLAYER_JUMP_HEIGHT 27
 #define BASIC_PLAYER_GRAVITY 1.5
 #define BASIC_PLAYER_MAX_GRAVITY 30
 #define BASIC_PLAYER_X_POSITION 400
@@ -101,7 +101,8 @@ typedef enum {
     END_BUTTON_STATE_T,
 } button_state_t;
 
-/// Enum for the block type. Value below delimiter have a phisical hitbox.
+/// Enum for the block type. Value below BT_DELIMITER have a phisical hitbox.
+/// Value above BT_DELIMITER_SPE have special comportment and can't apply color on them.
 typedef enum {
     BT_BASIC = 0,
     BT_BRICK,
@@ -109,6 +110,11 @@ typedef enum {
     BT_SPIKE,
     BT_WALL,
     BT_SPACE,
+    BT_DELIMITER_SPE,
+    BT_SPE_SPEED_UP,
+    BT_SPE_SPEED_UP_USED,
+    BT_SPE_SPEED_DOWN,
+    BT_SPE_SPEED_DOWN_USED,
 } block_type_t;
 
 typedef struct key_input_s {
@@ -182,8 +188,10 @@ void input_index(game_t *game);
 bool is_align(entity_t *player, entity_t *block);
 bool is_player_dead(game_t *game);
 bool is_in_the_air(game_t *game);
+bool is_player_in_block(entity_t *player, entity_t *block);
 
 int main_loop(void);
+void special_block_apply(game_t *game, entity_t *block);
 void game_destroy(game_t *game);
 
 #endif

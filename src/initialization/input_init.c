@@ -12,6 +12,7 @@ key_input_t *key_input_init(sfKeyCode key_code_value)
     key_input_t *key = malloc(sizeof(key_input_t));
 
     key->key_code = key_code_value;
+    key->key_state = UNPRESS;
     return (key);
 }
 

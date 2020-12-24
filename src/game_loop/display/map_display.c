@@ -48,6 +48,7 @@ void map_display(game_t *game)
 
     for EACH_BLOCK_ON_MAP {
             game->map[i]->pos.x -= PLAYER_X_SPEED;
+            special_block_apply(game, BLOCK);
             map_display_disapear_effect(BLOCK);
             map_display_enlighten(game, BLOCK);
             sfSprite_setPosition(game->map[i]->sprite, game->map[i]->pos);

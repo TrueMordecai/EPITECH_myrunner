@@ -16,6 +16,7 @@ SRC			=		src/main/main.c								\
 					src/initialization/input_init.c				\
 					src/initialization/background_init.c		\
 					src/game_loop/main_loop.c					\
+					src/game_loop/special_block.c				\
 					src/game_loop/display/map_display.c			\
 					src/game_loop/display/player_display.c		\
 					src/game_loop/display/background_display.c	\

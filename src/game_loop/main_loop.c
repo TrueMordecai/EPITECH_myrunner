@@ -17,6 +17,8 @@ void reset_map(game_t *game)
                                    (line * 128) + (600 - 128) - INFO->starting_position.y * 128);
         sfSprite_setPosition(BLOCK->sprite, BLOCK->pos);
         sfSprite_setScale(BLOCK->sprite, vector_create(1, 1));
+        if (BLOCK->type == BT_SPE_SPEED_DOWN_USED || BLOCK->type == BT_SPE_SPEED_UP_USED)
+            BLOCK->type--;
         if (game->info->map[i] == '\n') {
             line++;
             col = 0;
@@ -35,7 +37,7 @@ int main_loop(void)
         return (0);
 
     while (sfKeyboard_isKeyPressed(sfKeyQ) == sfFalse) {
-        if (INPUT->reset->key_state == PRESS|| is_player_dead(game))
+        if (INPUT->reset->key_state == PRESS || is_player_dead(game))
             reset_map(game);
         input_index(game);
         background_display(game);
