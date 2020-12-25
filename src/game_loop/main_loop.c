@@ -21,6 +21,8 @@ void reset_map(game_t *game)
             BLOCK->type--;
         if (BLOCK->type == BT_SPE_COINS_FOUND)
             BLOCK->type = BT_SPE_COINS;
+        if (BLOCK->type == BT_SPE_JUMPER_ORB_USED)
+            BLOCK->type = BT_SPE_JUMPER_ORB;
         if (game->info->map[i] == '\n') {
             line++;
             col = 0;

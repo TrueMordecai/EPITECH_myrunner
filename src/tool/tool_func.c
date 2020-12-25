@@ -7,6 +7,13 @@
 
 #include "runner.h"
 
+bool float_comparison(float to_compare, float tag_1, float tag_2)
+{
+    if (to_compare > tag_1 && to_compare < tag_2)
+        return (true);
+    return (false);
+}
+
 char *file_read(char const *path)
 {
     int fd = open(path, O_RDONLY);

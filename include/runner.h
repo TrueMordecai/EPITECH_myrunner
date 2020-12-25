@@ -101,7 +101,8 @@ typedef enum {
     END_BUTTON_STATE_T,
 } button_state_t;
 
-/// Enum for the block type. Value below BT_DELIMITER have a phisical hitbox.
+/// Enum for the block type.
+/// Value below BT_DELIMITER have a phisical hitbox.
 /// Value above BT_DELIMITER_SPE have special comportment and can't apply color on them.
 typedef enum {
     BT_BASIC = 0,
@@ -116,6 +117,7 @@ typedef enum {
     BT_SPE_SPEED_DOWN,
     BT_SPE_SPEED_DOWN_USED,
     BT_SPE_JUMPER_ORB,
+    BT_SPE_JUMPER_ORB_USED,
     BT_SPE_COINS,
     BT_SPE_COINS_FOUND,
 } block_type_t;
@@ -150,6 +152,7 @@ typedef struct map_info_s {
     int index_under;
     sfVector2f starting_position;
     entity_t *enlight_block;
+    unsigned short coins_founds;
 } map_info_t;
 
 typedef struct input_s {
@@ -194,6 +197,7 @@ bool is_align(entity_t *player, entity_t *block);
 bool is_player_dead(game_t *game);
 bool is_in_the_air(game_t *game);
 bool is_player_in_block(entity_t *player, entity_t *block);
+bool float_comparison(float to_compare, float tag_1, float tag_2);
 
 int main_loop(char const *path);
 void special_block_apply(game_t *game, entity_t *block);

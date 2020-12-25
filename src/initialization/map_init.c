@@ -105,6 +105,11 @@ void map_init_set_element(entity_t *block, sfTexture *texture, sfColor color, bl
         block->space = true;
     if (btype < BT_DELIMITER_SPE || color.a + color.b + color.g + color.r != 0)
         sfSprite_setColor(block->sprite, color);
+    if (btype == BT_SPE_COINS || btype == BT_SPE_JUMPER_ORB) {
+        sfSprite_setTextureRect(block->sprite, rect_create(0, 0, 128, 128));
+        block->clock = sfClock_create();
+        block->seconds = 0;
+    }
 }
 
 entity_t **map_init(char *map, sfVector2f starting_position)
@@ -141,8 +146,10 @@ entity_t **map_init(char *map, sfVector2f starting_position)
             map_init_set_element(block[i], speedup_texture, color_create(0, 0, 0, 0), BT_SPE_SPEED_UP);
         if (map[i] == '<')
             map_init_set_element(block[i], speeddown_texture, color_create(0, 0, 0, 0), BT_SPE_SPEED_DOWN);
-        if (map[i] == 'J')
+        if (map[i] == 'J') {
             map_init_set_element(block[i], jumper_texture, color_create(0, 0, 0, 0), BT_SPE_JUMPER_ORB);
+            sfSprite_setOrigin(block[i]->sprite, vector_create(128 / 2, 128 / 2));
+        }
         if (map[i] == 'C')
             map_init_set_element(block[i], coins_texture, color_create(0, 0, 0, 0), BT_SPE_COINS);
         block[i]->pos = vector_create((col * 128) + (400 - 128) - starting_position.x * 128, (line * 128) + (600 - 128) - starting_position.y * 128);
