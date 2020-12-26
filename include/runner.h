@@ -120,6 +120,7 @@ typedef enum {
     BT_SPE_JUMPER_ORB_USED,
     BT_SPE_COINS,
     BT_SPE_COINS_FOUND,
+    BT_SPE_VICTORY,
 } block_type_t;
 
 typedef struct key_input_s {
@@ -153,6 +154,7 @@ typedef struct map_info_s {
     sfVector2f starting_position;
     entity_t *enlight_block;
     unsigned short coins_founds;
+    bool is_win;
 } map_info_t;
 
 typedef struct input_s {
@@ -164,6 +166,7 @@ typedef struct input_s {
 typedef struct game_s {
     core_t *core;
     entity_t *background;
+    entity_t *hud;
     entity_t **map;
     entity_t *player;
     map_info_t *info;
@@ -177,6 +180,7 @@ entity_t **map_init(char *map, sfVector2f starting_position);
 input_t *input_init(void);
 map_info_t *map_info_init(char const *map);
 entity_t *background_init(void);
+entity_t *hud_init(void);
 
 bool is_error_map(char const *map);
 

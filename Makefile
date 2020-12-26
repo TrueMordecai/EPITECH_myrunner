@@ -15,6 +15,7 @@ SRC			=		src/main/main.c								\
 					src/initialization/map_info_init.c			\
 					src/initialization/input_init.c				\
 					src/initialization/background_init.c		\
+					src/initialization/hud_init.c				\
 					src/initialization/error/error_on_map.c		\
 					src/game_loop/main_loop.c					\
 					src/game_loop/special_block.c				\

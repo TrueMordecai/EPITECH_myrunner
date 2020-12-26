@@ -24,6 +24,7 @@ game_t *game_init(char const *path)
     game->info = map_info_init(map);
     game->map = map_init(map, INFO->starting_position);
     game->input = input_init();
+    game->hud = hud_init();
     game->background = background_init();
     return (game);
 }

@@ -97,6 +97,10 @@ char *my_strdup(char *str)
 }
 void map_init_set_element(entity_t *block, sfTexture *texture, sfColor color, block_type_t btype)
 {
+    if (btype == BT_SPE_SPEED_UP || btype == BT_SPE_SPEED_DOWN) {
+        sfTexture_setRepeated(texture, sfTrue);
+        block->rect = rect_create(0, 0, 128, 128);
+    }
     sfSprite_setTexture(block->sprite, texture, sfTrue);
     block->type = btype;
     if (btype < BT_DELIMITER)
@@ -125,6 +129,7 @@ entity_t **map_init(char *map, sfVector2f starting_position)
     sfTexture *speeddown_texture = sfTexture_createFromFile("image/speed_down.png", NULL);
     sfTexture *jumper_texture = sfTexture_createFromFile("image/jumper_orb.png", NULL);
     sfTexture *coins_texture = sfTexture_createFromFile("image/coins.png", NULL);
+    sfTexture *win_portal_texture = sfTexture_createFromFile("image/win_portal.png", NULL);
     char **map_array = str_to_array(my_strdup(map));
 
     for (uint i = 0; map[i] != '\0'; i++) {
@@ -149,6 +154,10 @@ entity_t **map_init(char *map, sfVector2f starting_position)
         if (map[i] == 'J') {
             map_init_set_element(block[i], jumper_texture, color_create(0, 0, 0, 0), BT_SPE_JUMPER_ORB);
             sfSprite_setOrigin(block[i]->sprite, vector_create(128 / 2, 128 / 2));
+        }
+        if (map[i] == 'V') {
+            map_init_set_element(block[i], win_portal_texture, color_create(0, 0, 0, 0), BT_SPE_VICTORY);
+            sfSprite_setScale(block[i]->sprite, vector_create(2, 2));
         }
         if (map[i] == 'C')
             map_init_set_element(block[i], coins_texture, color_create(0, 0, 0, 0), BT_SPE_COINS);

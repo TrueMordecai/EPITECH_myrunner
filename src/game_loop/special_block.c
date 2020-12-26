@@ -7,7 +7,7 @@
 
 #include "runner.h"
 
-void special_block_apply_coins_animation(entity_t *block)
+static void special_block_apply_coins_animation(entity_t *block)
 {
     block->time = sfClock_getElapsedTime(block->clock);
     block->seconds = sfTime_asSeconds(block->time);
@@ -44,6 +44,12 @@ static void special_block_apply_coins(game_t *game, entity_t *block)
 
 static void special_block_apply_speed_changer(game_t *game, entity_t *block)
 {
+    if (block->type == BT_SPE_SPEED_UP)
+        block->rect.left -= 5;
+    if (block->type == BT_SPE_SPEED_DOWN)
+        block->rect.left += 5;
+    if (block->type >= BT_SPE_SPEED_UP && block->type <= BT_SPE_SPEED_DOWN_USED)
+        sfSprite_setTextureRect(block->sprite, block->rect);
     if (is_player_in_block(PLAYER, block) && block->type == BT_SPE_SPEED_UP) {
         PLAYER->vect.x += 10;
         if (PLAYER->vect.x > 60)
@@ -87,9 +93,22 @@ static void special_block_apply_jumper(game_t *game, entity_t *block)
     }
 }
 
+static void special_block_apply_victory(game_t *game, entity_t *block)
+{
+    if (block->type != BT_SPE_VICTORY)
+        return;
+    block->pos.y = PLAYER->pos.y - 64;
+
+    if (block->pos.x < 1500)
+        block->pos.x -= -10;
+    if (is_player_in_block(PLAYER, block))
+        INFO->is_win = true;
+}
+
 void special_block_apply(game_t *game, entity_t *block)
 {
     special_block_apply_jumper(game, block);
     special_block_apply_speed_changer(game, block);
     special_block_apply_coins(game, block);
+    special_block_apply_victory(game, block);
 }

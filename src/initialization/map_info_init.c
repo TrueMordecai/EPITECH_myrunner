@@ -41,5 +41,6 @@ map_info_t *map_info_init(char const *map)
     info->index_under = 0;
     info->enlight_block = map_info_init_set_enlight();
     info->coins_founds = 0;
+    info->is_win = false;
     return (info);
 }
