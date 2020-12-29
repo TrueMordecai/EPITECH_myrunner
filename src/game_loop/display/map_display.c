@@ -53,10 +53,17 @@ void map_display(game_t *game)
             special_block_apply(game, BLOCK);
             map_display_disapear_effect(BLOCK);
             map_display_enlighten(game, BLOCK);
-            if (BLOCK->type == BT_SPE_JUMPER_ORB || BLOCK->type == BT_SPE_JUMPER_ORB_USED) {
+            if (BLOCK->type == BT_SPE_JUMPER_ORB || BLOCK->type == BT_SPE_JUMPER_ORB_USED)
                 sfSprite_setPosition(BLOCK->sprite, vector_create(BLOCK->pos.x + 64, BLOCK->pos.y + 64));
-            } else
-                sfSprite_setPosition(game->map[i]->sprite, game->map[i]->pos);
-            sfRenderWindow_drawSprite(RENDER_WINDOW, game->map[i]->sprite, NULL);
+            else
+                sfSprite_setPosition(BLOCK->sprite, BLOCK->pos);
+            if (BLOCK->type == BT_SPE_VICTORY) {
+                sfSprite_setPosition(INFO->portal1->sprite, BLOCK->pos);
+                sfSprite_setPosition(INFO->portal2->sprite, BLOCK->pos);
+                sfSprite_move(INFO->portal2->sprite, vector_create(17, 35));
+                sfRenderWindow_drawSprite(RENDER_WINDOW, INFO->portal2->sprite, NULL);
+                sfRenderWindow_drawSprite(RENDER_WINDOW, INFO->portal1->sprite, NULL);
+            }
+                sfRenderWindow_drawSprite(RENDER_WINDOW, game->map[i]->sprite, NULL);
         }
 }

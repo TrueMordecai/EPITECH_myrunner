@@ -110,7 +110,7 @@ void map_init_set_element(entity_t *block, sfTexture *texture, sfColor color, bl
     if (btype < BT_DELIMITER_SPE || color.a + color.b + color.g + color.r != 0)
         sfSprite_setColor(block->sprite, color);
     if (btype == BT_SPE_COINS || btype == BT_SPE_JUMPER_ORB) {
-        sfSprite_setTextureRect(block->sprite, rect_create(0, 0, 128, 128));
+        block->rect = rect_create(0, 0, 128, 128);
         block->clock = sfClock_create();
         block->seconds = 0;
     }

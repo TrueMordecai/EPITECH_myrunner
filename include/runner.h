@@ -32,6 +32,8 @@
 #define INFO game->info
 #define INPUT game->input
 #define BACKGROUND game->background
+#define HUD game->hud
+#define INTRO game->intro
 /// ------------------------------------
 
 /// -------- /!\ QoL : Access player informations. USE ONLY WITH PARAMETER GAME
@@ -105,6 +107,11 @@ typedef enum {
 /// Value below BT_DELIMITER have a phisical hitbox.
 /// Value above BT_DELIMITER_SPE have special comportment and can't apply color on them.
 typedef enum {
+    SCENE_INTRO = 0,
+    SCENE_GAME
+} scene_t;
+
+typedef enum {
     BT_BASIC = 0,
     BT_BRICK,
     BT_DELIMITER,
@@ -155,6 +162,9 @@ typedef struct map_info_s {
     entity_t *enlight_block;
     unsigned short coins_founds;
     bool is_win;
+    uint victory_index;
+    entity_t *portal1;
+    entity_t *portal2;
 } map_info_t;
 
 typedef struct input_s {
@@ -163,14 +173,21 @@ typedef struct input_s {
     key_input_t *quit;
 } input_t;
 
+typedef struct intro_s {
+    entity_t **background;
+    entity_t *platform;
+} intro_t;
+
 typedef struct game_s {
     core_t *core;
     entity_t *background;
     entity_t *hud;
     entity_t **map;
     entity_t *player;
+    intro_t *intro;
     map_info_t *info;
     input_t *input;
+    scene_t scene;
 } game_t;
 
 core_t *core_init(void);
@@ -181,6 +198,7 @@ input_t *input_init(void);
 map_info_t *map_info_init(char const *map);
 entity_t *background_init(void);
 entity_t *hud_init(void);
+intro_t *intro_init(void);
 
 bool is_error_map(char const *map);
 

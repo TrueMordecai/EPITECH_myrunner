@@ -97,13 +97,13 @@ static void special_block_apply_victory(game_t *game, entity_t *block)
 {
     if (block->type != BT_SPE_VICTORY)
         return;
-    block->pos.y = PLAYER->pos.y - 64;
-
     if (block->pos.x < 1500)
         block->pos.x -= -10;
-    if (is_player_in_block(PLAYER, block))
+    if (PLAYER_RIGHT_SIDE - 34 > block->pos.x)
         INFO->is_win = true;
+    block->pos.y = PLAYER->pos.y - 128;
 }
+
 
 void special_block_apply(game_t *game, entity_t *block)
 {
