@@ -49,13 +49,13 @@
 /// -------- /!\ QoL : Fast access to map elements during initialization
 /// Only used for initialized brick rect. USE ONLY WITH PARAMETER map, x, y
 #define NORTH map, y - 1, x
-#define EAST  map, y, x + 1
+#define EAST map, y, x + 1
 #define SOUTH map, y + 1, x
-#define WEST  map, y, x - 1
+#define WEST map, y, x - 1
 /// ------------------------------------
 
 /// -------- /!\ QoL : Access block informations. USE ONLY WITH PARAMETER GAME
-#define EACH_BLOCK_ON_MAP (uint i = 0; game->map[i] != NULL; i++)
+#define EACH_BLOCK_ON_MAP uint i = 0; game->map[i] != NULL; i++
 /// Use the macro below in a "for" loop pair with the macro above
 #define BLOCK game->map[i]
 #define BLOCK_LEFT_SIDE (game->map[i]->pos.x)
@@ -66,18 +66,17 @@
 #define BLOCK_IS_SPACE game->map[i]->space == true
 /// ------------------------------------
 
-
 /// -------- /!\ Information for the game
 #define BASIC_PLAYER_X_SPEED 20
 #define BASIC_PLAYER_Y_SPEED 0
 #define BASIC_PLAYER_JUMP_HEIGHT 27
 #define BASIC_PLAYER_GRAVITY 1.5
 #define BASIC_PLAYER_MAX_GRAVITY 30
-#define BASIC_PLAYER_X_POSITION 400
-#define BASIC_PLAYER_Y_POSITION 600
-#define BACKGROUND_SCALE 2, 2
-#define LARGE_BACKGROUND_RECT 0, 0, 1000000, 10000
-#define BACKGROUND_STARTING_POS 0 ,-500
+#define BASIC_PLAYER_X_POS 400
+#define BASIC_PLAYER_Y_POS 600
+#define BG_SCALE 2, 2
+#define LARGE_BG_RECT 0, 0, 1000000, 10000
+#define BG_STARTING_POS 0, -500
 #define BLOCK_SIZE 128
 #define PLAYER_SIZE 128
 #define PLAYER_TEXTURE_PATH "image/cube.png"
@@ -98,6 +97,37 @@
 #define FRAME_RATE 60
 /// ------------------------------------
 
+/// -------- /!\ Image Path, mostly for the norme
+#define PATH_INTRO_PLATFORM "image/intro_platform.png"
+#define PATH_SPIKE "image/spike.png"
+#define PATH_BG1 "image/intro/background_1.png"
+#define PATH_BG2 "image/intro/background_2.png"
+#define PATH_BG3 "image/intro/background_3.png"
+#define PATH_BG4 "image/intro/background_4.png"
+#define PATH_BASIC "image/basic.png"
+#define PATH_BRICK "image/brick0-tileset.png"
+#define PATH_WALL "image/brickwall.png"
+#define PATH_SPEEDU "image/speed_up.png"
+#define PATH_SPEEDD "image/jumper_orb.png"
+#define PATH_JUMPERO "image/jumper_orb.png"
+#define PATH_COIN "image/coins.png"
+#define PATH_PORTAL "image/win_portal.png"
+#define PATH_LIGHT "image/enlighten.png"
+#define PATH_PORTAL1 "image/portal1.png"
+#define PATH_EFFECT "image/portal_effect.png"
+#define PATH_BG "image/backgrounds/bg1hd.png"
+#define PATH_DEATH "image/death_effect.png"
+/// ------------------------------------
+
+/// -------- /!\ Macro only used for the norme, i hate to do that
+/// But i don't have any solutions if i want to be efficient.
+#define MISE map_init_set_element
+#define MIT map_init_tileset
+#define CC color_create
+#define X_BLOCK_START_POS (h * 128) + (400 - 128) - starting_position.x * 128
+#define Y_BLOCK_START_POS (v * 128) + (600 - 128) - starting_position.y * 128
+/// ------------------------------------
+
 /// Enum for state of the button, PRESS is only for one loop.
 typedef enum {
     UNPRESS = 0,
@@ -108,7 +138,8 @@ typedef enum {
 
 /// Enum for the block type.
 /// Value below BT_DELIMITER have a phisical hitbox.
-/// Value above BT_DELIMITER_SPE have special comportment and can't apply color on them.
+/// Value above BT_DELIMITER_SPE have special comportment
+/// Don't apply color on them.
 typedef enum {
     SCENE_INTRO = 0,
     SCENE_GAME

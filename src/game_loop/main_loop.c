@@ -20,9 +20,9 @@ void reset_map(game_t *game)
     sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
     sfSprite_setRotation(PLAYER->sprite, 0);
     input_index(game);
-    for EACH_BLOCK_ON_MAP {
-        BLOCK->pos = vector_create((col * 128) + (400 - 128) - INFO->starting_position.x * 128,
-                                   (line * 128) + (600 - 128) - INFO->starting_position.y * 128);
+    for (EACH_BLOCK_ON_MAP) {
+        BLOCK->pos = vector_create((col * 128) + (400 - 128) - INFO->starting_position.x * 128, \
+        (line * 128) + (600 - 128) - INFO->starting_position.y * 128);
         sfSprite_setPosition(BLOCK->sprite, BLOCK->pos);
         sfSprite_setScale(BLOCK->sprite, vector_create(1, 1));
         if (BLOCK->type == BT_SPE_SPEED_DOWN_USED || BLOCK->type == BT_SPE_SPEED_UP_USED)
@@ -40,7 +40,7 @@ void reset_map(game_t *game)
         col++;
     }
     PLAYER->vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
-    sfSprite_setPosition(BACKGROUND->sprite, vector_create(BACKGROUND_STARTING_POS));
+    sfSprite_setPosition(BACKGROUND->sprite, vector_create(BG_STARTING_POS));
 }
 
 void hud_display(game_t *game)
@@ -94,29 +94,29 @@ static void display_intro_player_update(game_t *game)
 
     if (ppos.x + 128 >= spos.x && ppos.x + 128 <= spos.x + 128 && ppos.y > 600 - 128) {
         sfSprite_setPosition(DEATH->sprite, sfSprite_getPosition(PLAYER->sprite));
-        sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POSITION, -140));
+        sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POS, -140));
         DEATH->space = true;
         death_effect_display(game);
         return;
     }
     PLAYER->vect.y += 1;
-    if (INPUT->jump->key_state == PRESS && sfSprite_getPosition(PLAYER->sprite).y == BASIC_PLAYER_Y_POSITION)
+    if (INPUT->jump->key_state == PRESS && sfSprite_getPosition(PLAYER->sprite).y == BASIC_PLAYER_Y_POS)
         PLAYER->vect.y = -20;
-    if (sfSprite_getPosition(PLAYER->sprite).y + PLAYER->vect.y >= BASIC_PLAYER_Y_POSITION)
-        PLAYER->vect.y = BASIC_PLAYER_Y_POSITION - sfSprite_getPosition(PLAYER->sprite).y;
+    if (sfSprite_getPosition(PLAYER->sprite).y + PLAYER->vect.y >= BASIC_PLAYER_Y_POS)
+        PLAYER->vect.y = BASIC_PLAYER_Y_POS - sfSprite_getPosition(PLAYER->sprite).y;
     sfSprite_move(PLAYER->sprite, PLAYER->vect);
 }
 
 static void display_intro_spike(game_t *game)
 {
     if (rand() % 100 == 0 && INTRO->spike->space == false) {
-        sfSprite_setPosition(INTRO->spike->sprite, vector_create(2500, BASIC_PLAYER_Y_POSITION));
+        sfSprite_setPosition(INTRO->spike->sprite, vector_create(2500, BASIC_PLAYER_Y_POS));
         INTRO->spike->space = true;
     }
     if (INTRO->spike->space == true) {
         sfSprite_move(INTRO->spike->sprite, vector_create(-20, 0));
         sfSprite_setColor(INTRO->platform->sprite, color_create(100, 100, 100, 255));
-        sfSprite_setPosition(INTRO->platform->sprite, vector_create(sfSprite_getPosition(INTRO->spike->sprite).x - 400, BASIC_PLAYER_Y_POSITION + 128));
+        sfSprite_setPosition(INTRO->platform->sprite, vector_create(sfSprite_getPosition(INTRO->spike->sprite).x - 400, BASIC_PLAYER_Y_POS + 128));
         sfRenderWindow_drawSprite(RENDER_WINDOW, INTRO->platform->sprite, NULL);
         sfRenderWindow_drawSprite(RENDER_WINDOW, INTRO->spike->sprite, NULL);
     }
@@ -131,7 +131,7 @@ void display_intro(game_t *game)
     sfSprite_setScale(PLAYER->sprite, vector_create(1, 1));
     sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
     sfSprite_setRotation(PLAYER->sprite, 0);
-    sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POSITION, -140));
+    sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POS, -140));
     INTRO->spike->space = false;
     while (INPUT->skip->key_state != PRESS && INPUT->exit->key_state != ALREADY_PRESS) {
         if (sfSprite_getPosition(HUD->sprite).y > -800)
@@ -142,7 +142,7 @@ void display_intro(game_t *game)
         display_intro_player_update(game);
         player_display(game);
         sfSprite_setColor(INTRO->platform->sprite, color_create(255, 255, 255, (600 - sfSprite_getPosition(PLAYER->sprite).y) * -1 + 220));
-        sfSprite_setPosition(INTRO->platform->sprite, vector_create(80, BASIC_PLAYER_Y_POSITION + 128));
+        sfSprite_setPosition(INTRO->platform->sprite, vector_create(80, BASIC_PLAYER_Y_POS + 128));
         sfRenderWindow_drawSprite(RENDER_WINDOW, HUD->sprite, NULL);
         sfRenderWindow_drawSprite(RENDER_WINDOW, INTRO->platform->sprite, NULL);
         death_effect_display(game);
@@ -150,7 +150,7 @@ void display_intro(game_t *game)
         sfRenderWindow_clear(RENDER_WINDOW, sfBlack);
     }
     PLAYER->vect.x = BASIC_PLAYER_X_SPEED;
-    sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POSITION, BASIC_PLAYER_Y_POSITION));
+    sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POS, BASIC_PLAYER_Y_POS));
 }
 
 int main_loop(char const *path)
@@ -160,7 +160,7 @@ int main_loop(char const *path)
     if (!game)
         return (0);
     INFO->victory_index = 0;
-    for EACH_BLOCK_ON_MAP
+    for (EACH_BLOCK_ON_MAP)
         if (BLOCK->type == BT_SPE_VICTORY)
             INFO->victory_index = i;
     while (!sfKeyboard_isKeyPressed(sfKeyEscape)) {

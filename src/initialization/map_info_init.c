@@ -26,10 +26,10 @@ static entity_t *map_info_init_set_enlight(void)
     entity_t *enlighten = malloc(sizeof(entity_t));
 
     enlighten->sprite = sfSprite_create();
-    enlighten->texture =  sfTexture_createFromFile("image/enlighten.png", sfFalse);
+    enlighten->texture = sfTexture_createFromFile(PATH_LIGHT, sfFalse);
     sfSprite_setTexture(enlighten->sprite, enlighten->texture, sfFalse);
     sfSprite_setColor(enlighten->sprite, color_create(255, 255, 255, 255));
-    return(enlighten);
+    return (enlighten);
 }
 
 static entity_t *map_info_init_portal_1(void)
@@ -37,7 +37,7 @@ static entity_t *map_info_init_portal_1(void)
     entity_t *portal1 = malloc(sizeof(entity_t));
 
     portal1->sprite = sfSprite_create();
-    portal1->texture = sfTexture_createFromFile("image/portal1.png", sfFalse);
+    portal1->texture = sfTexture_createFromFile(PATH_PORTAL1, sfFalse);
     sfSprite_setTexture(portal1->sprite, portal1->texture, sfFalse);
     sfSprite_setScale(portal1->sprite, vector_create(2, 2));
     return (portal1);
@@ -48,7 +48,7 @@ static entity_t *map_info_init_portal_2(void)
     entity_t *portal2 = malloc(sizeof(entity_t));
 
     portal2->sprite = sfSprite_create();
-    portal2->texture = sfTexture_createFromFile("image/portal_effect.png", sfFalse);
+    portal2->texture = sfTexture_createFromFile(PATH_EFFECT, sfFalse);
     sfTexture_setRepeated(portal2->texture, sfTrue);
     portal2->rect = rect_create(0, 0, 115, 36);
     sfSprite_setScale(portal2->sprite, vector_create(2, 2));

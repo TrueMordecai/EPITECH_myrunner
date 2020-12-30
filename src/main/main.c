@@ -7,7 +7,7 @@
 
 #include "runner.h"
 
-static void main_print_help_map_exemple()
+static void main_print_help_map_exemple(void)
 {
     my_putstr("MAP_EXEMPLE\n\n");
     my_putstr("P       x   ***\n");
@@ -15,16 +15,8 @@ static void main_print_help_map_exemple()
     my_putstr(" ooooooooooooooooooo\n\n");
 }
 
-static int main_print_help()
+static void main_print_help_tag(void)
 {
-    my_putstr("Finite runner made in csfml\n");
-    my_putstr("Small recreation of Geometry Dash\n\n");
-    my_putstr("USAGE\n    ./my_runner [MAP_PATH]\n\n");
-    my_putstr("USER INTERACTION\n");
-    my_putstr("    spaceKey == jump\n    qKey == quit\n    rKey == reset\n\n");
-    my_putstr("HOW TO CREATE A MAP\n");
-    my_putstr("    The mandatory\n        The file must end with a empty line");
-    my_putstr("\n        The file must contain one and only one 'P' tag\n");
     my_putstr("    Different tag\n");
     my_putstr("        P - Spawn coordinate of the player.\n");
     my_putstr("        * - Basic block, physical hitbox.\n");
@@ -36,8 +28,22 @@ static int main_print_help()
     my_putstr("        w - Wall in the background, for decoration only, no ");
     my_putstr("physical hitbox\n");
     my_putstr("        J - Jumping orb, no physical hitbox\n");
-    my_putstr("        C - Coin to collect, no physical hitbox, DON'T USE THEY ARE NOT WORKING\n");
+    my_putstr("        C - Coin to collect, no physical hitbox\n");
     my_putstr("        All other character a considered empty space\n\n");
+
+}
+
+static int main_print_help(void)
+{
+    my_putstr("Finite runner made in csfml\n");
+    my_putstr("Small recreation of Geometry Dash\n\n");
+    my_putstr("USAGE\n    ./my_runner [MAP_PATH]\n\n");
+    my_putstr("USER INTERACTION\n");
+    my_putstr("    spaceKey == jump\n    qKey == quit\n    rKey == reset\n\n");
+    my_putstr("HOW TO CREATE A MAP\n");
+    my_putstr("    The mandatory\n        The file must end with a empty line");
+    my_putstr("\n        The file must contain one and only one 'P' tag\n");
+    main_print_help_tag();
     main_print_help_map_exemple();
     return (0);
 }
