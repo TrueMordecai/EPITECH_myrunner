@@ -21,7 +21,9 @@ input_t *input_init(void)
     input_t *input = malloc(sizeof(input_t));
 
     input->jump = key_input_init(DEFAULT_JUMP);
-    input->quit = key_input_init(DEFAULT_QUIT);
-    input->reset = key_input_init(DEFAULT_RESTART);
+    input->quit = key_input_init(DEFAULT_QUIT_LEVEL);
+    input->reset = key_input_init(DEFAULT_RESTART_LEVEL);
+    input->skip = key_input_init(DEFAULT_SKIP_INTRO);
+    input->exit = key_input_init(DEFAULT_QUIT_GAME);
     return (input);
 }

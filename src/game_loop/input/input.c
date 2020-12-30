@@ -25,4 +25,6 @@ void input_index(game_t *game)
     get_input(INPUT->jump);
     get_input(INPUT->quit);
     get_input(INPUT->reset);
+    get_input(INPUT->skip);
+    get_input(INPUT->exit);
 }

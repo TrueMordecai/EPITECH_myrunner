@@ -27,6 +27,7 @@ game_t *game_init(char const *path)
     game->hud = hud_init();
     game->intro = intro_init();
     game->background = background_init();
+    game->death_effect = death_effect_init();
     game->scene = SCENE_INTRO;
     return (game);
 }

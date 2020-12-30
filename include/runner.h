@@ -34,6 +34,7 @@
 #define BACKGROUND game->background
 #define HUD game->hud
 #define INTRO game->intro
+#define DEATH game->death_effect
 /// ------------------------------------
 
 /// -------- /!\ QoL : Access player informations. USE ONLY WITH PARAMETER GAME
@@ -85,8 +86,10 @@
 
 /// -------- /!\ Default key
 #define DEFAULT_JUMP sfKeySpace
-#define DEFAULT_RESTART sfKeyR
-#define DEFAULT_QUIT sfKeyQ
+#define DEFAULT_RESTART_LEVEL sfKeyR
+#define DEFAULT_QUIT_LEVEL sfKeyQ
+#define DEFAULT_SKIP_INTRO sfKeyEnter
+#define DEFAULT_QUIT_GAME sfKeyEscape
 /// ------------------------------------
 
 /// -------- /!\ Core Information Macro
@@ -157,6 +160,7 @@ typedef struct entity_s {
 
 typedef struct map_info_s {
     char const *map;
+    entity_t *death_effect;
     int index_under;
     sfVector2f starting_position;
     entity_t *enlight_block;
@@ -171,6 +175,8 @@ typedef struct input_s {
     key_input_t *jump;
     key_input_t *reset;
     key_input_t *quit;
+    key_input_t *skip;
+    key_input_t *exit;
 } input_t;
 
 typedef struct intro_s {
@@ -185,6 +191,7 @@ typedef struct game_s {
     entity_t *hud;
     entity_t **map;
     entity_t *player;
+    entity_t *death_effect;
     intro_t *intro;
     map_info_t *info;
     input_t *input;
@@ -200,6 +207,7 @@ map_info_t *map_info_init(char const *map);
 entity_t *background_init(void);
 entity_t *hud_init(void);
 intro_t *intro_init(void);
+entity_t *death_effect_init(void);
 
 bool is_error_map(char const *map);
 
@@ -213,6 +221,7 @@ void map_display(game_t *game);
 void background_display(game_t *game);
 void player_display(game_t *game);
 void gravity_update(game_t *game);
+void death_effect_display(game_t *game);
 
 void input_index(game_t *game);
 

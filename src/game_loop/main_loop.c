@@ -16,6 +16,10 @@ void reset_map(game_t *game)
     HUD->pos = vector_create(566 , -662);
     HUD->vect = vector_create(0, 10);
     game->info->is_win = false;
+    sfSprite_setScale(PLAYER->sprite, vector_create(1, 1));
+    sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
+    sfSprite_setRotation(PLAYER->sprite, 0);
+    input_index(game);
     for EACH_BLOCK_ON_MAP {
         BLOCK->pos = vector_create((col * 128) + (400 - 128) - INFO->starting_position.x * 128,
                                    (line * 128) + (600 - 128) - INFO->starting_position.y * 128);
@@ -60,7 +64,7 @@ void hud_display(game_t *game)
 
 void display_level(game_t *game)
 {
-    while (sfKeyboard_isKeyPressed(sfKeyQ) == sfFalse) {
+    while (INPUT->quit->key_state != PRESS && INPUT->exit->key_state != ALREADY_PRESS) {
         if (INPUT->reset->key_state == PRESS || is_player_dead(game))
             reset_map(game);
         input_index(game);
@@ -85,6 +89,16 @@ void display_intro_parralax(game_t *game)
 
 static void display_intro_player_update(game_t *game)
 {
+    sfVector2f ppos = sfSprite_getPosition(PLAYER->sprite);
+    sfVector2f spos = sfSprite_getPosition(INTRO->spike->sprite);
+
+    if (ppos.x + 128 >= spos.x && ppos.x + 128 <= spos.x + 128 && ppos.y > 600 - 128) {
+        sfSprite_setPosition(DEATH->sprite, sfSprite_getPosition(PLAYER->sprite));
+        sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POSITION, -140));
+        DEATH->space = true;
+        death_effect_display(game);
+        return;
+    }
     PLAYER->vect.y += 1;
     if (INPUT->jump->key_state == PRESS && sfSprite_getPosition(PLAYER->sprite).y == BASIC_PLAYER_Y_POSITION)
         PLAYER->vect.y = -20;
@@ -119,7 +133,7 @@ void display_intro(game_t *game)
     sfSprite_setRotation(PLAYER->sprite, 0);
     sfSprite_setPosition(PLAYER->sprite, vector_create(BASIC_PLAYER_X_POSITION, -140));
     INTRO->spike->space = false;
-    while (!sfKeyboard_isKeyPressed(sfKeyEnter)) {
+    while (INPUT->skip->key_state != PRESS && INPUT->exit->key_state != ALREADY_PRESS) {
         if (sfSprite_getPosition(HUD->sprite).y > -800)
             sfSprite_move(HUD->sprite, vector_create(0, -15));
         input_index(game);
@@ -131,6 +145,7 @@ void display_intro(game_t *game)
         sfSprite_setPosition(INTRO->platform->sprite, vector_create(80, BASIC_PLAYER_Y_POSITION + 128));
         sfRenderWindow_drawSprite(RENDER_WINDOW, HUD->sprite, NULL);
         sfRenderWindow_drawSprite(RENDER_WINDOW, INTRO->platform->sprite, NULL);
+        death_effect_display(game);
         sfRenderWindow_display(RENDER_WINDOW);
         sfRenderWindow_clear(RENDER_WINDOW, sfBlack);
     }
