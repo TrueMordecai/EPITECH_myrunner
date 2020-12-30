@@ -35,6 +35,21 @@ static entity_t *intro_init_platform(void)
     return (platform);
 }
 
+static entity_t *intro_init_spike(void)
+{
+    entity_t *spike = malloc(sizeof(entity_t));
+
+    spike->sprite = sfSprite_create();
+    spike->texture = sfTexture_createFromFile("image/spike.png", NULL);
+    spike->vect = vector_create(0, -2);
+    spike->space = false;
+    sfSprite_setTexture(spike->sprite, spike->texture, sfFalse);
+    sfSprite_setPosition(spike->sprite, vector_create(-400, -400));
+    sfSprite_setColor(spike->sprite, color_create(255, 255, 255, 255));
+    sfSprite_setScale(spike->sprite, vector_create(1, 1));
+    return (spike);
+}
+
 intro_t *intro_init(void) {
     intro_t *intro = malloc(sizeof(intro_t));
 
@@ -44,5 +59,6 @@ intro_t *intro_init(void) {
     intro->background[2] = intro_init_background("image/intro/background_3.png");
     intro->background[3] = intro_init_background("image/intro/background_4.png");
     intro->platform = intro_init_platform();
+    intro->spike = intro_init_spike();
     return (intro);
 }

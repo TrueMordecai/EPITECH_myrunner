@@ -75,8 +75,8 @@
 #define BASIC_PLAYER_X_POSITION 400
 #define BASIC_PLAYER_Y_POSITION 600
 #define BACKGROUND_SCALE 2, 2
-#define LARGE_BACKGROUND_RECT 0, 0, 10000, 10000
-#define BACKGROUND_STARTING_POS 0, 0
+#define LARGE_BACKGROUND_RECT 0, 0, 1000000, 10000
+#define BACKGROUND_STARTING_POS 0 ,-500
 #define BLOCK_SIZE 128
 #define PLAYER_SIZE 128
 #define PLAYER_TEXTURE_PATH "image/cube.png"
@@ -176,6 +176,7 @@ typedef struct input_s {
 typedef struct intro_s {
     entity_t **background;
     entity_t *platform;
+    entity_t *spike;
 } intro_t;
 
 typedef struct game_s {

@@ -15,6 +15,7 @@ static void background_display_portal_effect(game_t *game)
 
 void background_display(game_t *game)
 {
+    display_intro_parralax(game);
     sfSprite_move(BACKGROUND->sprite, vector_create(-(PLAYER->vect.x / 4), -(PLAYER->vect.y / 4)));
     sfRenderWindow_drawSprite(RENDER_WINDOW, game->background->sprite, NULL);
     background_display_portal_effect(game);
