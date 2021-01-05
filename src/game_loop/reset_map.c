@@ -9,6 +9,7 @@
 
 static void reset_map_2(game_t *game)
 {
+    game->scene = SCENE_GAME;
     HUD->pos = vector_create(566, -662);
     HUD->vect = vector_create(0, 10);
     game->info->is_win = false;

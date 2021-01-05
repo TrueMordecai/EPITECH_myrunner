@@ -29,16 +29,6 @@ char **str_to_array(char *map)
     }
     return (map_array);
 }
-
-int array_size_get(char **array)
-{
-    int size = 0;
-
-    while (array[size] != NULL)
-        size++;
-    return (size);
-}
-
 bool isbrick(char **map, int y, int x)
 {
     if (x < 0 || y < 0)
@@ -88,17 +78,6 @@ static sfIntRect map_init_tileset(char **map, uint x, uint y)
     if (isbrick(NORTH) && isbrick(EAST) && !isbrick(SOUTH) && !isbrick(WEST))
         return (rect_create(128 * 1, 128 * 3, BLOCK_SIZE, BLOCK_SIZE));
     return (map_init_tileset2(map, x, y));
-}
-
-char *my_strdup(char *str)
-{
-    char *nstr = malloc(sizeof(char) * (my_strlen(str) + 1));
-
-    for (uint i = 0; str[i] != '\0'; i++) {
-        nstr[i] = str[i];
-    }
-    nstr[my_strlen(str)] = '\0';
-    return (nstr);
 }
 
 void map_init_set_element(entity_t *block, sfTexture *texture,

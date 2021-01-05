@@ -71,6 +71,12 @@ bool is_player_dead(game_t *game)
 
 bool is_in_the_air(game_t *game)
 {
+    if (game->scene == SCENE_INTRO) {
+        if (sfSprite_getPosition(PLAYER->sprite).y != 600)
+            return (true);
+        else
+            return (false);
+    }
     for (EACH_BLOCK_ON_MAP) {
         if (BLOCK->space == false && PLAYER_BOT_SIDE == BLOCK_TOP_SIDE &&\
         is_align(PLAYER, BLOCK)) {

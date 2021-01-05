@@ -212,10 +212,21 @@ typedef struct input_s {
     key_input_t *skin_change;
 } input_t;
 
+typedef struct text_anim_s {
+    char *str;
+    sfText *text_info;
+    sfVector2f *vect;
+    sfTime time;
+    sfClock *clock;
+    float second;
+    int index_up;
+} text_anim_t;
+
 typedef struct intro_s {
     entity_t **background;
     entity_t *platform;
     entity_t *spike;
+    text_anim_t *text;
 } intro_t;
 
 typedef struct game_s {
@@ -266,10 +277,10 @@ bool is_in_the_air(game_t *game);
 bool is_player_in_block(entity_t *player, entity_t *block);
 bool float_comparison(float to_compare, float tag_1, float tag_2);
 void reset_map(game_t *game);
-
+int array_size_get(char **array);
+char *my_strdup(char *str);
 int main_loop(char const *path);
 void special_block_apply(game_t *game, entity_t *block);
 void special_block_apply_2(game_t *game, entity_t *block);
 void game_destroy(game_t *game);
-
 #endif

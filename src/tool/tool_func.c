@@ -37,3 +37,22 @@ sfVector2f vector2i_to_vector2f(sfVector2i vect)
     nvect.y = (float)vect.y;
     return (nvect);
 }
+
+char *my_strdup(char *str)
+{
+    char *nstr = malloc(sizeof(char) * (my_strlen(str) + 1));
+
+    for (uint i = 0; str[i] != '\0'; i++) {
+        nstr[i] = str[i];
+    }
+    nstr[my_strlen(str)] = '\0';
+    return (nstr);
+}
+int array_size_get(char **array)
+{
+    int size = 0;
+
+    while (array[size] != NULL)
+        size++;
+    return (size);
+}

@@ -59,6 +59,66 @@ static void display_intro_spike(game_t *game)
     }
 }
 
+char *char_to_str(char c)
+{
+    char *str = malloc(sizeof(char) * 2);
+
+    str[0] = c;
+    str[1] = '\0';
+    return(str);
+}
+
+static void display_intro_text_animate(game_t *game)
+{
+    INTRO->text->time = sfClock_getElapsedTime(INTRO->text->clock);
+    INTRO->text->second = sfTime_asSeconds(INTRO->text->time);
+    if (INTRO->text->second > 0.1) {
+        INTRO->text->index_up++;
+        sfClock_restart((INTRO->text->clock));
+    }
+    if (INTRO->text->index_up >= my_strlen(INTRO->text->str))
+        INTRO->text->index_up = 0;
+}
+
+void display_intro_text(game_t *game)
+{
+    display_intro_text_animate(game);
+    for (int i = 0; INTRO->text->str[i] != '\0'; i++) {
+        sfText_setPosition(INTRO->text->text_info, INTRO->text->vect[i]);
+        sfText_move(INTRO->text->text_info, vector_create(0,
+        (((my_compute_power_it((INTRO->text->index_up - 10), 3)) - (INTRO->text->index_up - 10) * 100)) / 20));
+        if (INTRO->text->index_up == i)
+            sfText_move(INTRO->text->text_info, vector_create(0, -5));
+        if (INTRO->text->index_up >= i - 1 && INTRO->text->index_up <= i + 1)
+            sfText_move(INTRO->text->text_info, vector_create(0, -5));
+        if (INTRO->text->index_up >= i - 2 && INTRO->text->index_up <= i + 2)
+            sfText_move(INTRO->text->text_info, vector_create(0, -5));
+        sfText_setScale(INTRO->text->text_info, vector_create(1, 1));
+        sfText_setColor(INTRO->text->text_info, color_create(200, 245, 90, 255));
+        sfText_setCharacterSize(INTRO->text->text_info, 50);
+        sfText_setOutlineColor(INTRO->text->text_info, sfBlack);
+        sfText_setOutlineThickness(INTRO->text->text_info, 3);
+        sfText_setString(INTRO->text->text_info, char_to_str(INTRO->text->str[i]));
+        sfRenderWindow_drawText(RENDER_WINDOW, INTRO->text->text_info, NULL);
+        sfText_setString(INTRO->text->text_info, char_to_str('m'));
+        sfText_setCharacterSize(INTRO->text->text_info, 30);
+        sfText_setScale(INTRO->text->text_info, vector_create(5, -2.3));
+        sfText_setColor(INTRO->text->text_info, color_create(0, 0, 0, 40));
+        sfText_setOutlineThickness(INTRO->text->text_info, 0);
+        sfText_move(INTRO->text->text_info, vector_create(-70, 110));
+        sfRenderWindow_drawText(RENDER_WINDOW, INTRO->text->text_info, NULL);
+        sfText_setScale(INTRO->text->text_info, vector_create(1, 1));
+        sfText_setColor(INTRO->text->text_info, color_create(200, 245, 90, 0));
+        sfText_setCharacterSize(INTRO->text->text_info, 50);
+        sfText_setOutlineColor(INTRO->text->text_info, sfWhite);
+        sfText_setOutlineThickness(INTRO->text->text_info, 1);
+        sfText_setString(INTRO->text->text_info, char_to_str(INTRO->text->str[i]));
+        sfText_move(INTRO->text->text_info, vector_create(70, -110));
+        sfRenderWindow_drawText(RENDER_WINDOW, INTRO->text->text_info, NULL);
+
+    }
+}
+
 static void display_intro_loop(game_t *game)
 {
     while (INPUT->skip->key_state != PRESS && INPUT->exit->key_state != 2) {
@@ -71,6 +131,7 @@ static void display_intro_loop(game_t *game)
         display_intro_spike(game);
         display_intro_parralax(game);
         display_intro_player_update(game);
+        display_intro_text(game);
         player_display(game);
         sfSprite_setColor(INTRO->platform->sprite, color_create(255, 255, 255,
         (600 - sfSprite_getPosition(PLAYER->sprite).y) * -1 + 220));
@@ -86,9 +147,10 @@ static void display_intro_loop(game_t *game)
 
 void display_intro(game_t *game)
 {
+    game->scene = SCENE_INTRO;
     PLAYER->vect = vector_create(0, 0);
     sfSprite_setScale(PLAYER->sprite, vector_create(1, 1));
-    sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
+    sfSprite_setOrigin(PLAYER->sprite, vector_create(64, 64));
     sfSprite_setRotation(PLAYER->sprite, 0);
     sfSprite_setPosition(PLAYER->sprite, vector_create(400, -140));
     INTRO->spike->space = false;

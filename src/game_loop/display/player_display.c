@@ -20,10 +20,10 @@ static void player_display_rotation_set(game_t *game)
     float true_r = (int)sfSprite_getRotation(PLAYER->sprite);
 
     if (is_in_the_air(game)) {
-        sfSprite_rotate(PLAYER->sprite, 7);
+        sfSprite_rotate(PLAYER->sprite, 6);
         return;
     }
-    if (r < 85 && r != 0 && r >= 45) {
+    if (r <= 85 && r != 0 && r >= 45) {
         sfSprite_rotate(PLAYER->sprite, 5);
         return;
     }
