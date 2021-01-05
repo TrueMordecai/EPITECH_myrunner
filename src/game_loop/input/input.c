@@ -9,15 +9,15 @@
 
 void get_input(key_input_t *key)
 {
-    if (sfKeyboard_isKeyPressed(key->key_code) == sfTrue && (key->key_state == PRESS || key->key_state == ALREADY_PRESS)) {
+    if (sfKeyboard_isKeyPressed(key->key_code) == sfTrue &&\
+    (key->key_state == PRESS || key->key_state == ALREADY_PRESS)) {
         key->key_state = ALREADY_PRESS;
         return;
     }
-    if (sfKeyboard_isKeyPressed(key->key_code) == sfTrue) {
+    if (sfKeyboard_isKeyPressed(key->key_code) == sfTrue)
         key->key_state = PRESS;
-    } else {
+    else
         key->key_state = UNPRESS;
-    }
 }
 
 void input_index(game_t *game)
@@ -27,4 +27,5 @@ void input_index(game_t *game)
     get_input(INPUT->reset);
     get_input(INPUT->skip);
     get_input(INPUT->exit);
+    get_input(INPUT->skin_change);
 }

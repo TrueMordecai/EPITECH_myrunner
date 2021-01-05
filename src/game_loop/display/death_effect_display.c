@@ -7,6 +7,27 @@
 
 #include "runner.h"
 
+void death_effect_display_2(game_t *game)
+{
+    if (float_comparison(DEATH->seconds, 0.4, 0.5)) {
+        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 100));
+        DEATH->rect = rect_create(0, 52 * 4, 43, 52);
+    }
+    if (float_comparison(DEATH->seconds, 0.5, 0.6))
+        DEATH->rect = rect_create(0, 52 * 5, 43, 52);
+    if (float_comparison(DEATH->seconds, 0.6, 0.7)) {
+        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 255));
+        DEATH->rect = rect_create(0, 52 * 6, 43, 52);
+    }
+    if (DEATH->seconds > 0.7) {
+        DEATH->space = false;
+        sfClock_restart((DEATH->clock));
+    }
+    sfSprite_setTextureRect(DEATH->sprite, DEATH->rect);
+    sfRenderWindow_drawSprite(RENDER_WINDOW, DEATH->sprite, NULL);
+
+}
+
 void death_effect_display(game_t *game)
 {
     if (DEATH->space == false) {
@@ -28,20 +49,5 @@ void death_effect_display(game_t *game)
     }
     if (float_comparison(DEATH->seconds, 0.3, 0.4))
         DEATH->rect = rect_create(0, 52 * 3, 43, 52);
-    if (float_comparison(DEATH->seconds, 0.4, 0.5)) {
-        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 100));
-        DEATH->rect = rect_create(0, 52 * 4, 43, 52);
-    }
-    if (float_comparison(DEATH->seconds, 0.5, 0.6))
-        DEATH->rect = rect_create(0, 52 * 5, 43, 52);
-    if (float_comparison(DEATH->seconds, 0.6, 0.7)) {
-        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 255));
-        DEATH->rect = rect_create(0, 52 * 6, 43, 52);
-    }
-    if (DEATH->seconds > 0.7) {
-        DEATH->space = false;
-        sfClock_restart((DEATH->clock));
-    }
-    sfSprite_setTextureRect(DEATH->sprite, DEATH->rect);
-    sfRenderWindow_drawSprite(RENDER_WINDOW, DEATH->sprite, NULL);
+    death_effect_display_2(game);
 }

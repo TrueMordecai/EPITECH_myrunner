@@ -20,12 +20,16 @@ SRC			=		src/main/main.c									\
 					src/initialization/death_effect_init.c			\
 					src/initialization/error/error_on_map.c			\
 					src/game_loop/main_loop.c						\
+					src/game_loop/reset_map.c						\
 					src/game_loop/special_block.c					\
+					src/game_loop/special_block_2.c					\
 					src/game_loop/display/map_display.c				\
 					src/game_loop/display/player_display.c			\
 					src/game_loop/display/death_effect_display.c	\
 					src/game_loop/display/background_display.c		\
+					src/game_loop/display/intro_display.c			\
 					src/game_loop/input/input.c						\
+					src/tool/create_tool.c							\
 					src/tool/tool_func.c							\
 					src/tool/bool_check_state.c
 

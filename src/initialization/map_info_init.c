@@ -29,6 +29,7 @@ static entity_t *map_info_init_set_enlight(void)
     enlighten->texture = sfTexture_createFromFile(PATH_LIGHT, sfFalse);
     sfSprite_setTexture(enlighten->sprite, enlighten->texture, sfFalse);
     sfSprite_setColor(enlighten->sprite, color_create(255, 255, 255, 255));
+    sfSprite_setOrigin(enlighten->sprite, vector_create(64, 64));
     return (enlighten);
 }
 
@@ -40,6 +41,7 @@ static entity_t *map_info_init_portal_1(void)
     portal1->texture = sfTexture_createFromFile(PATH_PORTAL1, sfFalse);
     sfSprite_setTexture(portal1->sprite, portal1->texture, sfFalse);
     sfSprite_setScale(portal1->sprite, vector_create(2, 2));
+    sfSprite_setOrigin(portal1->sprite, vector_create(64, 64));
     return (portal1);
 }
 

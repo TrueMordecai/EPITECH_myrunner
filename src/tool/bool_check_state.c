@@ -46,15 +46,15 @@ static bool is_player_dead2(game_t *game, uint i)
             return (true);
     if ((PLAYER_LEFT_SIDE >= BLOCK_LEFT_SIDE &&\
         PLAYER_LEFT_SIDE <= BLOCK_RIGHT_SIDE) &&\
-        (BLOCK->type == false || BLOCK->type == BT_SPIKE))
+        (BLOCK->space == false || BLOCK->type == BT_SPIKE))
         if (PLAYER_TOP_SIDE < BLOCK_BOT_SIDE &&\
-            PLAYER_TOP_SIDE >= BLOCK_TOP_SIDE)
+            PLAYER_TOP_SIDE > BLOCK_TOP_SIDE)
             return (true);
     if ((PLAYER_RIGHT_SIDE >= BLOCK_LEFT_SIDE &&\
         PLAYER_RIGHT_SIDE <= BLOCK_RIGHT_SIDE))
         if (PLAYER_TOP_SIDE < BLOCK_BOT_SIDE &&\
             PLAYER_TOP_SIDE >= BLOCK_TOP_SIDE &&\
-            (BLOCK->type == false || BLOCK->type == BT_SPIKE))
+            (BLOCK->space == false || BLOCK->type == BT_SPIKE))
             return (true);
     return (false);
 }

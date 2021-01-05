@@ -170,6 +170,7 @@ entity_t **map_init(char *map, sfVector2f starting_position)
             MISE(block[i], coins_texture, CC(0, 0, 0, 0), BT_SPE_COINS);
         block[i]->pos = vector_create(X_BLOCK_START_POS, Y_BLOCK_START_POS);
         sfSprite_setPosition(block[i]->sprite, block[i]->pos);
+        sfSprite_setOrigin(block[i]->sprite, vector_create(64, 64));
         if (map[i] == '\n') {
             v++;
             h = 0;

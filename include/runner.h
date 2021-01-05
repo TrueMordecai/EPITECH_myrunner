@@ -89,6 +89,7 @@
 #define DEFAULT_QUIT_LEVEL sfKeyQ
 #define DEFAULT_SKIP_INTRO sfKeyEnter
 #define DEFAULT_QUIT_GAME sfKeyEscape
+#define DEFAULT_SKIN_CHANGE sfKeyS
 /// ------------------------------------
 
 /// -------- /!\ Core Information Macro
@@ -108,7 +109,7 @@
 #define PATH_BRICK "image/brick0-tileset.png"
 #define PATH_WALL "image/brickwall.png"
 #define PATH_SPEEDU "image/speed_up.png"
-#define PATH_SPEEDD "image/jumper_orb.png"
+#define PATH_SPEEDD "image/speed_down.png"
 #define PATH_JUMPERO "image/jumper_orb.png"
 #define PATH_COIN "image/coins.png"
 #define PATH_PORTAL "image/win_portal.png"
@@ -208,6 +209,7 @@ typedef struct input_s {
     key_input_t *quit;
     key_input_t *skip;
     key_input_t *exit;
+    key_input_t *skin_change;
 } input_t;
 
 typedef struct intro_s {
@@ -249,6 +251,8 @@ sfVector2f vector_create(float x, float y);
 sfIntRect rect_create(int top, int left, int height, int width);
 
 void map_display(game_t *game);
+void display_intro(game_t *game);
+void display_intro_parralax(game_t *game);
 void background_display(game_t *game);
 void player_display(game_t *game);
 void gravity_update(game_t *game);
@@ -261,9 +265,11 @@ bool is_player_dead(game_t *game);
 bool is_in_the_air(game_t *game);
 bool is_player_in_block(entity_t *player, entity_t *block);
 bool float_comparison(float to_compare, float tag_1, float tag_2);
+void reset_map(game_t *game);
 
 int main_loop(char const *path);
 void special_block_apply(game_t *game, entity_t *block);
+void special_block_apply_2(game_t *game, entity_t *block);
 void game_destroy(game_t *game);
 
 #endif

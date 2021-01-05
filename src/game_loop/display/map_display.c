@@ -11,7 +11,6 @@ static void map_display_update(game_t *game)
 {
     if (!is_in_the_air(game)) {
         PLAYER_Y_SPEED = 0;
-        sfSprite_setRotation(PLAYER->sprite, 0);
         if ((INPUT->jump->key_state == PRESS || \
             INPUT->jump->key_state == ALREADY_PRESS) && !is_in_the_air(game))
             PLAYER_Y_SPEED -= BASIC_PLAYER_JUMP_HEIGHT;
@@ -33,7 +32,8 @@ static void map_display_enlighten(game_t *game, entity_t *block)
         return;
     sfSprite_setPosition(INFO->enlight_block->sprite, \
     vector_create(block->pos.x - 2, block->pos.y - 2));
-    sfRenderWindow_drawSprite(RENDER_WINDOW, \
+    sfSprite_setOrigin(INFO->enlight_block->sprite, vector_create(64, 64));
+    sfRenderWindow_drawSprite(RENDER_WINDOW,    \
     INFO->enlight_block->sprite, NULL);}
 
 static void map_display_disapear_effect(entity_t *block)
@@ -52,7 +52,7 @@ static void map_display_portal(game_t *game, entity_t *block)
 {
     sfSprite_setPosition(INFO->portal1->sprite, block->pos);
     sfSprite_setPosition(INFO->portal2->sprite, block->pos);
-    sfSprite_move(INFO->portal2->sprite, vector_create(17, 35));
+    sfSprite_move(INFO->portal2->sprite, vector_create(-113, -93));
     sfRenderWindow_drawSprite(RENDER_WINDOW, INFO->portal2->sprite, 0);
     sfRenderWindow_drawSprite(RENDER_WINDOW, INFO->portal1->sprite, 0);
 }
@@ -65,12 +65,7 @@ void map_display(game_t *game)
         special_block_apply(game, BLOCK);
         map_display_disapear_effect(BLOCK);
         map_display_enlighten(game, BLOCK);
-        if (BLOCK->type == BT_SPE_JUMPER_ORB ||\
-            BLOCK->type == BT_SPE_JUMPER_ORB_USED)
-            sfSprite_setPosition(BLOCK->sprite, \
-            vector_create(BLOCK->pos.x + 64, BLOCK->pos.y + 64));
-        else
-            sfSprite_setPosition(BLOCK->sprite, BLOCK->pos);
+        sfSprite_setPosition(BLOCK->sprite, BLOCK->pos);
         if (BLOCK->type == BT_SPE_VICTORY)
             map_display_portal(game, BLOCK);
         sfRenderWindow_drawSprite(RENDER_WINDOW, game->map[i]->sprite, 0);

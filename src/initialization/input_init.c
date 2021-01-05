@@ -25,5 +25,6 @@ input_t *input_init(void)
     input->reset = key_input_init(DEFAULT_RESTART_LEVEL);
     input->skip = key_input_init(DEFAULT_SKIP_INTRO);
     input->exit = key_input_init(DEFAULT_QUIT_GAME);
+    input->skin_change = key_input_init(DEFAULT_SKIN_CHANGE);
     return (input);
 }
