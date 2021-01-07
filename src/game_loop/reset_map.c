@@ -18,6 +18,7 @@ static void reset_map_2(game_t *game)
     sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
     sfSprite_setRotation(PLAYER->sprite, 0);
     PLAYER->vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
+    INFO->true_vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
 }
 
 void reset_map(game_t *game)

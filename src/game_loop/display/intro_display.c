@@ -72,7 +72,7 @@ static void display_intro_text_animate(game_t *game)
 {
     INTRO->text->time = sfClock_getElapsedTime(INTRO->text->clock);
     INTRO->text->second = sfTime_asSeconds(INTRO->text->time);
-    if (INTRO->text->second > 0.1) {
+    if (INTRO->text->second > 0.04) {
         INTRO->text->index_up++;
         sfClock_restart((INTRO->text->clock));
     }

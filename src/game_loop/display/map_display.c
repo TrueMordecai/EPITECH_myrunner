@@ -60,6 +60,7 @@ static void map_display_portal(game_t *game, entity_t *block)
 void map_display(game_t *game)
 {
     map_display_update(game);
+    PLAYER->vect.x = INFO->true_vect.x;
     for (EACH_BLOCK_ON_MAP) {
         if (BLOCK->type != BT_SPE_COINS_FOUND) BLOCK->pos.x -= PLAYER_X_SPEED;
         special_block_apply(game, BLOCK);

@@ -201,6 +201,7 @@ typedef struct map_info_s {
     uint victory_index;
     entity_t *portal1;
     entity_t *portal2;
+    sfVector2f true_vect;
 } map_info_t;
 
 typedef struct input_s {

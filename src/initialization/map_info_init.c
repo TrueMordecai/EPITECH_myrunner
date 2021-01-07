@@ -66,6 +66,7 @@ map_info_t *map_info_init(char const *map)
     info->portal1 = map_info_init_portal_1();
     info->portal2 = map_info_init_portal_2();
     info->map = map;
+    info->true_vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
     info->index_under = 0;
     info->enlight_block = map_info_init_set_enlight();
     info->coins_founds = 0;

@@ -1,0 +1,78 @@
+tool/bool_check_state.c:        if (sfSprite_getPosition(PLAYER->sprite).y != 600)
+game_loop/display/intro_display.c:    sfVector2f pps = sfSprite_getPosition(PLAYER->sprite);
+game_loop/display/intro_display.c:        sfSprite_setPosition(PLAYER->sprite, vector_create(400, -140));
+game_loop/display/intro_display.c:    PLAYER->vect.y += 1;
+game_loop/display/intro_display.c:        sfSprite_getPosition(PLAYER->sprite).y == BASIC_PLAYER_Y_POS)
+game_loop/display/intro_display.c:        PLAYER->vect.y = -20;
+game_loop/display/intro_display.c:    if (sfSprite_getPosition(PLAYER->sprite).y + PLAYER->vect.y >= 600)
+game_loop/display/intro_display.c:        PLAYER->vect.y = 600 - sfSprite_getPosition(PLAYER->sprite).y;
+game_loop/display/intro_display.c:    sfSprite_move(PLAYER->sprite, PLAYER->vect);
+game_loop/display/intro_display.c:            PLAYER->rect.left += 128;
+game_loop/display/intro_display.c:        PLAYER->rect.left >= 128 * 10? PLAYER->rect.left = 0: PLAYER->rect.left;
+game_loop/display/intro_display.c:        (600 - sfSprite_getPosition(PLAYER->sprite).y) * -1 + 220));
+game_loop/display/intro_display.c:    PLAYER->vect = vector_create(0, 0);
+game_loop/display/intro_display.c:    sfSprite_setScale(PLAYER->sprite, vector_create(1, 1));
+game_loop/display/intro_display.c:    sfSprite_setOrigin(PLAYER->sprite, vector_create(64, 64));
+game_loop/display/intro_display.c:    sfSprite_setRotation(PLAYER->sprite, 0);
+game_loop/display/intro_display.c:    sfSprite_setPosition(PLAYER->sprite, vector_create(400, -140));
+game_loop/display/intro_display.c:    PLAYER->vect.x = BASIC_PLAYER_X_SPEED;
+game_loop/display/intro_display.c:    sfSprite_setPosition(PLAYER->sprite, vector_create(400, 600));
+game_loop/display/map_display.c:    PLAYER->vect = INFO->true_vect;
+game_loop/display/background_display.c:    (-(PLAYER->vect.x / 4), -(PLAYER->vect.y / 4)));
+game_loop/display/player_display.c:    float r = (int)sfSprite_getRotation(PLAYER->sprite) % 90;
+game_loop/display/player_display.c:    float true_r = (int)sfSprite_getRotation(PLAYER->sprite);
+game_loop/display/player_display.c:        sfSprite_rotate(PLAYER->sprite, 6);
+game_loop/display/player_display.c:        sfSprite_rotate(PLAYER->sprite, 5);
+game_loop/display/player_display.c:        sfSprite_rotate(PLAYER->sprite, -5);
+game_loop/display/player_display.c:        sfSprite_setRotation(PLAYER->sprite, 0);
+game_loop/display/player_display.c:        sfSprite_setRotation(PLAYER->sprite, 90);
+game_loop/display/player_display.c:        sfSprite_setRotation(PLAYER->sprite, 180);
+game_loop/display/player_display.c:        sfSprite_setRotation(PLAYER->sprite, 270);
+game_loop/display/player_display.c:    sfSprite_setTextureRect(PLAYER->sprite, PLAYER->rect);
+game_loop/display/player_display.c:    sfRenderWindow_drawSprite(RENDER_WINDOW, PLAYER->sprite, NULL);
+game_loop/display/death_effect_display.c:        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 100));
+game_loop/display/death_effect_display.c:        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 255));
+game_loop/display/death_effect_display.c:        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 100));
+game_loop/display/death_effect_display.c:        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 255));
+game_loop/display/intro_display.c~:    sfVector2f pps = sfSprite_getPosition(PLAYER->sprite);
+game_loop/display/intro_display.c~:        sfSprite_setPosition(PLAYER->sprite, vector_create(400, -140));
+game_loop/display/intro_display.c~:    PLAYER->vect.y += 1;
+game_loop/display/intro_display.c~:        sfSprite_getPosition(PLAYER->sprite).y == BASIC_PLAYER_Y_POS)
+game_loop/display/intro_display.c~:        PLAYER->vect.y = -20;
+game_loop/display/intro_display.c~:    if (sfSprite_getPosition(PLAYER->sprite).y + PLAYER->vect.y >= 600)
+game_loop/display/intro_display.c~:        PLAYER->vect.y = 600 - sfSprite_getPosition(PLAYER->sprite).y;
+game_loop/display/intro_display.c~:    sfSprite_move(PLAYER->sprite, PLAYER->vect);
+game_loop/display/intro_display.c~:            PLAYER->rect.left += 128;
+game_loop/display/intro_display.c~:        PLAYER->rect.left >= 128 * 4? PLAYER->rect.left = 0: PLAYER->rect.left;
+game_loop/display/intro_display.c~:        (600 - sfSprite_getPosition(PLAYER->sprite).y) * -1 + 220));
+game_loop/display/intro_display.c~:    PLAYER->vect = vector_create(0, 0);
+game_loop/display/intro_display.c~:    sfSprite_setScale(PLAYER->sprite, vector_create(1, 1));
+game_loop/display/intro_display.c~:    sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
+game_loop/display/intro_display.c~:    sfSprite_setRotation(PLAYER->sprite, 0);
+game_loop/display/intro_display.c~:    sfSprite_setPosition(PLAYER->sprite, vector_create(400, -140));
+game_loop/display/intro_display.c~:    PLAYER->vect.x = BASIC_PLAYER_X_SPEED;
+game_loop/display/intro_display.c~:    sfSprite_setPosition(PLAYER->sprite, vector_create(400, 600));
+game_loop/main_loop.c:    sfSprite_setOrigin(PLAYER->sprite, vector_create(64, 64));
+game_loop/main_loop.c:    PLAYER->vect.y = 0;
+game_loop/main_loop.c:    sfSprite_rotate(PLAYER->sprite, -2);
+game_loop/main_loop.c:    if (PLAYER->vect.x > 20)
+game_loop/main_loop.c:        PLAYER->vect.x = 20;
+game_loop/main_loop.c:        PLAYER->vect.x -= 0.3;
+game_loop/main_loop.c:    sfSprite_scale(PLAYER->sprite, vector_create(0.8, 0.8));
+game_loop/special_block.c:        PLAYER->vect.x += 10;
+game_loop/special_block.c:        if (PLAYER->vect.x > 60)
+game_loop/special_block.c:            PLAYER->vect.x -= 10;
+game_loop/special_block.c:        PLAYER->vect.x -= 10;
+game_loop/special_block.c:        if (PLAYER->vect.x < 10)
+game_loop/special_block.c:            PLAYER->vect.x += 10;
+game_loop/special_block.c:        PLAYER->vect.y = BASIC_PLAYER_JUMP_HEIGHT * -1;
+game_loop/special_block.c:    block->pos.y = PLAYER->pos.y - 128;
+game_loop/reset_map.c~:    sfSprite_setScale(PLAYER->sprite, vector_create(1, 1));
+game_loop/reset_map.c~:    sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
+game_loop/reset_map.c~:    sfSprite_setRotation(PLAYER->sprite, 0);
+game_loop/reset_map.c~:    PLAYER->vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
+game_loop/reset_map.c:    sfSprite_setScale(PLAYER->sprite, vector_create(1, 1));
+game_loop/reset_map.c:    sfSprite_setOrigin(PLAYER->sprite, vector_create(0, 0));
+game_loop/reset_map.c:    sfSprite_setRotation(PLAYER->sprite, 0);
+game_loop/reset_map.c:    PLAYER->vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
+game_loop/reset_map.c:    sfSprite_setOrigin(PLAYER->sprite, vector_create(64, 64));
