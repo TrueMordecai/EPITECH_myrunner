@@ -76,7 +76,7 @@
 #define BASIC_PLAYER_Y_POS 600
 #define BG_SCALE 2, 2
 #define LARGE_BG_RECT 0, 0, 1000000, 10000
-#define BG_STARTING_POS 0, -500
+#define BG_STARTING_POS 0, -1000
 #define BLOCK_SIZE 128
 #define PLAYER_SIZE 128
 #define PLAYER_TEXTURE_PATH "image/cube.png"
@@ -90,7 +90,10 @@
 #define DEFAULT_SKIP_INTRO sfKeyEnter
 #define DEFAULT_QUIT_GAME sfKeyEscape
 #define DEFAULT_SKIN_CHANGE sfKeyS
-/// ------------------------------------
+#define DEFAULT_CHANGE_COLOR_R sfKeyI
+#define DEFAULT_CHANGE_COLOR_G sfKeyO
+#define DEFAULT_CHANGE_COLOR_B sfKeyP
+/// ---------------------------
 
 /// -------- /!\ Core Information Macro
 #define RESOLUTION_X 1920
@@ -116,7 +119,7 @@
 #define PATH_LIGHT "image/enlighten.png"
 #define PATH_PORTAL1 "image/portal1.png"
 #define PATH_EFFECT "image/portal_effect.png"
-#define PATH_BG "image/backgrounds/bg1hd.png"
+#define PATH_BG "image/bg.png"
 #define PATH_DEATH "image/death_effect.png"
 /// ------------------------------------
 
@@ -145,6 +148,12 @@ typedef enum {
     SCENE_INTRO = 0,
     SCENE_GAME
 } scene_t;
+
+typedef enum {
+    R = 0,
+    G,
+    B
+} RGB_MACROS;
 
 typedef enum {
     BT_BASIC = 0,
@@ -211,6 +220,7 @@ typedef struct input_s {
     key_input_t *skip;
     key_input_t *exit;
     key_input_t *skin_change;
+    key_input_t **change_color;
 } input_t;
 
 typedef struct text_anim_s {
@@ -228,6 +238,7 @@ typedef struct intro_s {
     entity_t *platform;
     entity_t *spike;
     text_anim_t *text;
+    text_anim_t *rgb;
 } intro_t;
 
 typedef struct game_s {
@@ -253,15 +264,12 @@ entity_t *background_init(void);
 entity_t *hud_init(void);
 intro_t *intro_init(void);
 entity_t *death_effect_init(void);
-
 bool is_error_map(char const *map);
-
 char *file_read(char const *path);
 sfVector2f vector2i_to_vector2f(sfVector2i vect);
 sfColor color_create(uint r, uint g, uint b, uint a);
 sfVector2f vector_create(float x, float y);
 sfIntRect rect_create(int top, int left, int height, int width);
-
 void map_display(game_t *game);
 void display_intro(game_t *game);
 void display_intro_parralax(game_t *game);
@@ -269,9 +277,7 @@ void background_display(game_t *game);
 void player_display(game_t *game);
 void gravity_update(game_t *game);
 void death_effect_display(game_t *game);
-
 void input_index(game_t *game);
-
 bool is_align(entity_t *player, entity_t *block);
 bool is_player_dead(game_t *game);
 bool is_in_the_air(game_t *game);

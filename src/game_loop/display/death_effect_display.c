@@ -9,14 +9,16 @@
 
 void death_effect_display_2(game_t *game)
 {
+    sfColor color = sfSprite_getColor(PLAYER->sprite);
+
     if (float_comparison(DEATH->seconds, 0.4, 0.5)) {
-        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 100));
+        sfSprite_setColor(PLAYER->sprite, color);
         DEATH->rect = rect_create(0, 52 * 4, 43, 52);
     }
     if (float_comparison(DEATH->seconds, 0.5, 0.6))
         DEATH->rect = rect_create(0, 52 * 5, 43, 52);
     if (float_comparison(DEATH->seconds, 0.6, 0.7)) {
-        sfSprite_setColor(PLAYER->sprite, color_create(255, 255, 255, 255));
+        sfSprite_setColor(PLAYER->sprite, color);
         DEATH->rect = rect_create(0, 52 * 6, 43, 52);
     }
     if (DEATH->seconds > 0.7) {

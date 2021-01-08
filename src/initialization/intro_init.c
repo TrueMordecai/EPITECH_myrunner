@@ -53,7 +53,7 @@ static entity_t *intro_init_spike(void)
     return (spike);
 }
 
-static text_anim_t *text_anim_init(char *str)
+static text_anim_t *text_anim_init(char *str, char const *font_path, sfColor co)
 {
     text_anim_t *text_anim = malloc(sizeof(text_anim_t));
 
@@ -62,15 +62,15 @@ static text_anim_t *text_anim_init(char *str)
     text_anim->second = 0;
     text_anim->time = sfClock_getElapsedTime(text_anim->clock);
     text_anim->text_info = sfText_create();
-    sfText_setFont(text_anim->text_info, sfFont_createFromFile("oxy.ttf"));
+    sfText_setFont(text_anim->text_info, sfFont_createFromFile(font_path));
     sfText_setColor(text_anim->text_info, sfGreen);
     sfText_setCharacterSize(text_anim->text_info, 50);
-    sfText_setOutlineColor(text_anim->text_info, sfWhite);
+    sfText_setOutlineColor(text_anim->text_info, co);
     text_anim->index_up = 0;
-    sfText_setOutlineThickness(text_anim->text_info, 3);
+    sfText_setOutlineThickness(text_anim->text_info, 1);
     text_anim->vect = malloc(sizeof(sfVector2f*) * my_strlen(str));
     for (uint i = 0; str[i]; i++) {
-        text_anim->vect[i] = vector_create(1000 + 35 * i, 100);
+        text_anim->vect[i] = vector_create(1040 + 35 * i, 100);
     }
     return(text_anim);
 }
@@ -84,7 +84,8 @@ intro_t *intro_init(void)
     intro->background[1] = intro_init_background(PATH_BG2);
     intro->background[2] = intro_init_background(PATH_BG3);
     intro->background[3] = intro_init_background(PATH_BG4);
-    intro->text = text_anim_init("PRESS ENTER TO PLAY!");
+    intro->text = text_anim_init("PRESS ENTER TO PLAY!", "./oxy.ttf", sfGreen);
+    intro->rgb = text_anim_init("Press S to change skin", "./pus.otf", sfBlack);
     intro->platform = intro_init_platform();
     intro->spike = intro_init_spike();
     return (intro);

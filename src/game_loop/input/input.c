@@ -28,4 +28,6 @@ void input_index(game_t *game)
     get_input(INPUT->skip);
     get_input(INPUT->exit);
     get_input(INPUT->skin_change);
+    for (unsigned short i = 0; i != 3; i++)
+        get_input(INPUT->change_color[i]);
 }

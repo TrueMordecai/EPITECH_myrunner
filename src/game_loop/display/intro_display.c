@@ -68,6 +68,7 @@ char *char_to_str(char c)
     return(str);
 }
 
+
 static void display_intro_text_animate(game_t *game)
 {
     INTRO->text->time = sfClock_getElapsedTime(INTRO->text->clock);
@@ -80,7 +81,7 @@ static void display_intro_text_animate(game_t *game)
         INTRO->text->index_up = 0;
 }
 
-void display_intro_text(game_t *game)
+void display_intro_text_anim(game_t *game)
 {
     display_intro_text_animate(game);
     for (int i = 0; INTRO->text->str[i] != '\0'; i++) {
@@ -115,8 +116,70 @@ void display_intro_text(game_t *game)
         sfText_setString(INTRO->text->text_info, char_to_str(INTRO->text->str[i]));
         sfText_move(INTRO->text->text_info, vector_create(70, -110));
         sfRenderWindow_drawText(RENDER_WINDOW, INTRO->text->text_info, NULL);
-
     }
+}
+
+static void display_intro_change_color(game_t *game)
+{
+    sfColor color = sfSprite_getColor(PLAYER->sprite);
+
+    if (INPUT->change_color[R]->key_state == ALREADY_PRESS)
+        color.r++;
+    if (INPUT->change_color[G]->key_state == ALREADY_PRESS)
+        color.g++;
+    if (INPUT->change_color[B]->key_state == ALREADY_PRESS)
+        color.b++;
+    sfSprite_setColor(PLAYER->sprite, color);
+}
+
+char *int_to_str(int i)
+{
+    char *str = malloc(sizeof(char) * 4);
+
+    str[0] = i / 100 % 10 + '0';
+    str[1] = i / 10 % 10 + '0';
+    str[2] = i % 10 + '0';
+    str[3] = '\0';
+    return (str);
+}
+
+static void display_intro_text_rgb(game_t *game)
+{
+    sfText_setPosition(INTRO->rgb->text_info, vector_create(1130, 200));
+    sfText_setCharacterSize(INTRO->rgb->text_info, 50);
+    sfText_setString(INTRO->rgb->text_info, "Change skin with S");
+    sfText_setColor(INTRO->rgb->text_info, sfWhite);
+    sfText_setColor(INTRO->rgb->text_info, sfWhite);
+    sfText_setOutlineThickness(INTRO->rgb->text_info, 5);
+    sfText_setOutlineColor(INTRO->rgb->text_info, sfBlack);
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
+    if (sfSprite_getColor(PLAYER->sprite).r + sfSprite_getColor(PLAYER->sprite).g + sfSprite_getColor(PLAYER->sprite).a > 760)
+        sfText_setOutlineThickness(INTRO->rgb->text_info, 0);
+    else
+        sfText_setOutlineThickness(INTRO->rgb->text_info, 2);
+     sfText_setString(INTRO->rgb->text_info, INTRO->rgb->str);
+    sfText_setPosition(INTRO->rgb->text_info, vector_create(900, 300));
+    sfText_setString(INTRO->rgb->text_info, "Press I O P to change color R G B");
+    sfText_setOutlineColor(INTRO->rgb->text_info, sfSprite_getColor(PLAYER->sprite));
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
+    sfText_setPosition(INTRO->rgb->text_info, vector_create(1000, 400));
+    sfText_setString(INTRO->rgb->text_info, "R : ");
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
+    sfText_move(INTRO->rgb->text_info, vector_create(50, 0));
+    sfText_setString(INTRO->rgb->text_info, int_to_str(sfSprite_getColor(PLAYER->sprite).r));
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
+    sfText_setPosition(INTRO->rgb->text_info, vector_create(1300, 400));
+    sfText_setString(INTRO->rgb->text_info, "G : ");
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
+    sfText_move(INTRO->rgb->text_info, vector_create(50, 0));
+    sfText_setString(INTRO->rgb->text_info, int_to_str(sfSprite_getColor(PLAYER->sprite).g));
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
+    sfText_setPosition(INTRO->rgb->text_info, vector_create(1600, 400));
+    sfText_setString(INTRO->rgb->text_info, "B : ");
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
+    sfText_move(INTRO->rgb->text_info, vector_create(50, 0));
+    sfText_setString(INTRO->rgb->text_info, int_to_str(sfSprite_getColor(PLAYER->sprite).b));
+    sfRenderWindow_drawText(RENDER_WINDOW, INTRO->rgb->text_info, NULL);
 }
 
 static void display_intro_loop(game_t *game)
@@ -131,8 +194,10 @@ static void display_intro_loop(game_t *game)
         display_intro_spike(game);
         display_intro_parralax(game);
         display_intro_player_update(game);
-        display_intro_text(game);
+        display_intro_text_anim(game);
+        display_intro_text_rgb(game);
         player_display(game);
+        display_intro_change_color(game);
         sfSprite_setColor(INTRO->platform->sprite, color_create(255, 255, 255,
         (600 - sfSprite_getPosition(PLAYER->sprite).y) * -1 + 220));
         sfSprite_setPosition(INTRO->platform->sprite, vector_create(80, 728));
@@ -142,7 +207,6 @@ static void display_intro_loop(game_t *game)
         sfRenderWindow_display(RENDER_WINDOW);
         sfRenderWindow_clear(RENDER_WINDOW, sfBlack);
     }
-
 }
 
 void display_intro(game_t *game)

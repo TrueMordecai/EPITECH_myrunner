@@ -12,7 +12,10 @@ key_input_t *key_input_init(sfKeyCode key_code_value)
     key_input_t *key = malloc(sizeof(key_input_t));
 
     key->key_code = key_code_value;
-    key->key_state = UNPRESS;
+    if (key_code_value == DEFAULT_SKIP_INTRO)
+        key->key_state = ALREADY_PRESS;
+    else
+        key->key_state = UNPRESS;
     return (key);
 }
 
@@ -26,5 +29,9 @@ input_t *input_init(void)
     input->skip = key_input_init(DEFAULT_SKIP_INTRO);
     input->exit = key_input_init(DEFAULT_QUIT_GAME);
     input->skin_change = key_input_init(DEFAULT_SKIN_CHANGE);
+    input->change_color = malloc(sizeof(key_input_t *) * 3);
+    input->change_color[R] = key_input_init(DEFAULT_CHANGE_COLOR_R);
+    input->change_color[G] = key_input_init(DEFAULT_CHANGE_COLOR_G);
+    input->change_color[B] = key_input_init(DEFAULT_CHANGE_COLOR_B);
     return (input);
 }
