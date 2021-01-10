@@ -48,6 +48,7 @@ char *my_strdup(char *str)
     nstr[my_strlen(str)] = '\0';
     return (nstr);
 }
+
 int array_size_get(char **array)
 {
     int size = 0;

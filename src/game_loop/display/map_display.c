@@ -48,11 +48,11 @@ static void map_display_disapear_effect(entity_t *block)
     sfSprite_scale(block->sprite, vector_create(0.95, 0.95));
 }
 
-static void map_display_portal(game_t *game, entity_t *block)
+void map_display_portal(game_t *game, entity_t *block)
 {
     sfSprite_setPosition(INFO->portal1->sprite, block->pos);
     sfSprite_setPosition(INFO->portal2->sprite, block->pos);
-    sfSprite_move(INFO->portal2->sprite, vector_create(-113, -93));
+    sfSprite_move(INFO->portal2->sprite, vector_create(13, 32));
     sfRenderWindow_drawSprite(RENDER_WINDOW, INFO->portal2->sprite, 0);
     sfRenderWindow_drawSprite(RENDER_WINDOW, INFO->portal1->sprite, 0);
 }
@@ -60,15 +60,18 @@ static void map_display_portal(game_t *game, entity_t *block)
 void map_display(game_t *game)
 {
     map_display_update(game);
-    PLAYER->vect.x = INFO->true_vect.x;
+    if (!INFO->is_win)
+        PLAYER->vect.x = INFO->true_vect.x;
     for (EACH_BLOCK_ON_MAP) {
         if (BLOCK->type != BT_SPE_COINS_FOUND) BLOCK->pos.x -= PLAYER_X_SPEED;
         special_block_apply(game, BLOCK);
         map_display_disapear_effect(BLOCK);
         map_display_enlighten(game, BLOCK);
         sfSprite_setPosition(BLOCK->sprite, BLOCK->pos);
-        if (BLOCK->type == BT_SPE_VICTORY)
+        if (BLOCK->type == BT_SPE_VICTORY) {
             map_display_portal(game, BLOCK);
+            player_display(game);
+        }
         sfRenderWindow_drawSprite(RENDER_WINDOW, game->map[i]->sprite, 0);
     }
 }

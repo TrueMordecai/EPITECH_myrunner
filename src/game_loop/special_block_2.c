@@ -30,6 +30,7 @@ static void special_block_apply_coins(game_t *game, entity_t *block)
     if (block->type == BT_SPE_COINS || block->type ==BT_SPE_COINS_FOUND)
         special_block_apply_coins_animation(block);
     if (is_player_in_block(PLAYER, block) && block->type == BT_SPE_COINS) {
+        sfMusic_play(INFO->mus_coin[INFO->coins_founds]);
         block->type = BT_SPE_COINS_FOUND;
         sfSprite_setTextureRect(block->sprite, rect_create(0, 128, 128, 128));
         INFO->coins_founds++;

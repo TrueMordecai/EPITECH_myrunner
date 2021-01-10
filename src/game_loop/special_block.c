@@ -67,9 +67,11 @@ static void special_block_apply_victory(game_t *game, entity_t *block)
         return;
     if (block->pos.x < 1500)
         block->pos.x -= -10;
-    if (PLAYER_RIGHT_SIDE - 34 > block->pos.x)
+    if (PLAYER_RIGHT_SIDE - 34 > block->pos.x && !INFO->is_win) {
         INFO->is_win = true;
-    block->pos.y = PLAYER->pos.y - 128;
+        PLAYER->vect = vector_create(20, 0);
+    }
+    block->pos.y = PLAYER->pos.y - 64;
 }
 
 void special_block_apply(game_t *game, entity_t *block)

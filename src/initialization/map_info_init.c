@@ -55,6 +55,7 @@ static entity_t *map_info_init_portal_2(void)
     portal2->rect = rect_create(0, 0, 115, 36);
     sfSprite_setScale(portal2->sprite, vector_create(2, 2));
     sfSprite_setTexture(portal2->sprite, portal2->texture, sfFalse);
+    sfSprite_setOrigin(portal2->sprite, vector_create(64, 64));
     return (portal2);
 }
 
@@ -71,5 +72,10 @@ map_info_t *map_info_init(char const *map)
     info->enlight_block = map_info_init_set_enlight();
     info->coins_founds = 0;
     info->is_win = false;
+    info->mus_map = sfMusic_createFromFile("music/TimeMachine.ogg");
+    info->mus_coin = malloc(sizeof(sfMusic *) * 3);
+    for (uint i = 0; i != 3; i++)
+        info->mus_coin[i] = sfMusic_createFromFile("music/coin.wav");
+    info->mus_intro = sfMusic_createFromFile("music/OutThere.ogg");
     return (info);
 }

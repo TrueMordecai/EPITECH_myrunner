@@ -128,6 +128,7 @@
 #define MISE map_init_set_element
 #define MIT map_init_tileset
 #define CC color_create
+#define GC sfSprite_getColor
 #define X_BLOCK_START_POS (h * 128) + (400 - 128) - starting_position.x * 128
 #define Y_BLOCK_START_POS (v * 128) + (600 - 128) - starting_position.y * 128
 /// ------------------------------------
@@ -211,6 +212,9 @@ typedef struct map_info_s {
     entity_t *portal1;
     entity_t *portal2;
     sfVector2f true_vect;
+    sfMusic *mus_intro;
+    sfMusic *mus_map;
+    sfMusic **mus_coin;
 } map_info_t;
 
 typedef struct input_s {
@@ -290,4 +294,13 @@ int main_loop(char const *path);
 void special_block_apply(game_t *game, entity_t *block);
 void special_block_apply_2(game_t *game, entity_t *block);
 void game_destroy(game_t *game);
+void window_event(game_t *game);
+void display_intro_parralax(game_t *game);
+void display_intro_player_update(game_t *game);
+void display_intro_spike(game_t *game);
+void display_intro(game_t *game);
+char *int_to_str(int i);
+char *char_str(char c);
+void display_intro_text_anim(game_t *game);
+void display_intro_text_rgb(game_t *game);
 #endif

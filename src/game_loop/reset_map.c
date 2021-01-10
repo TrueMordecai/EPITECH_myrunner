@@ -19,6 +19,11 @@ static void reset_map_2(game_t *game)
     sfSprite_setRotation(PLAYER->sprite, 0);
     PLAYER->vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
     INFO->true_vect = vector_create(BASIC_PLAYER_X_SPEED, BASIC_PLAYER_Y_SPEED);
+    INFO->coins_founds = 0;
+    for (uint i = 0; i != 3; i++)
+        sfMusic_stop(INFO->mus_coin[i]);
+    sfSprite_setPosition(BACKGROUND->sprite, vector_create(BG_STARTING_POS));
+    sfSprite_setOrigin(PLAYER->sprite, vector_create(64, 64));
 }
 
 void reset_map(game_t *game)
@@ -43,7 +48,5 @@ void reset_map(game_t *game)
         }
         col++;
     }
-    sfSprite_setPosition(BACKGROUND->sprite, vector_create(BG_STARTING_POS));
-    sfSprite_setOrigin(PLAYER->sprite, vector_create(64, 64));
 }
 

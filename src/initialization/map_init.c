@@ -29,6 +29,7 @@ char **str_to_array(char *map)
     }
     return (map_array);
 }
+
 bool isbrick(char **map, int y, int x)
 {
     if (x < 0 || y < 0)

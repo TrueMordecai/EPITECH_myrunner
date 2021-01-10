@@ -28,18 +28,20 @@ void hud_display(game_t *game)
 
 void display_level(game_t *game)
 {
-    while (INPUT->quit->key_state != PRESS && INPUT->exit->key_state != 2) {
+    sfMusic_play(INFO->mus_map);
+    while ((INPUT->quit->key_state != PRESS && INPUT->exit->key_state != 2) && \
+    sfRenderWindow_isOpen(RENDER_WINDOW)) {
         if (INPUT->reset->key_state == PRESS || is_player_dead(game))
             reset_map(game);
         input_index(game);
         background_display(game);
-        player_display(game);
         map_display(game);
         if (INFO->is_win)
             hud_display(game);
         sfRenderWindow_display(RENDER_WINDOW);
         sfRenderWindow_clear(RENDER_WINDOW, sfBlack);
     }
+    sfMusic_stop(INFO->mus_map);
 }
 
 bool portal_position_found_and_valid(game_t *game)
@@ -58,6 +60,15 @@ bool portal_position_found_and_valid(game_t *game)
     return (true);
 }
 
+void window_event(game_t *game)
+{
+    sfRenderWindow_pollEvent(CORE->window, &CORE->event);
+    if (CORE->event.type == sfEvtClosed) {
+        sfRenderWindow_close(CORE->window);
+        INPUT->exit->key_state = PRESS;
+    }
+}
+
 int main_loop(char const *path)
 {
     game_t *game = game_init(path);
@@ -66,7 +77,8 @@ int main_loop(char const *path)
         return (0);
     if (!portal_position_found_and_valid(game))
         return (0);
-    while (!sfKeyboard_isKeyPressed(sfKeyEscape)) {
+    while (!sfKeyboard_isKeyPressed(sfKeyEscape) && \
+    sfRenderWindow_isOpen(RENDER_WINDOW)) {
         display_intro(game);
         reset_map(game);
         display_level(game);

@@ -29,7 +29,7 @@ static entity_t *intro_init_platform(void)
     platform->sprite = sfSprite_create();
     platform->texture = sfTexture_createFromFile(PATH_INTRO_PLATFORM, NULL);
     sfSprite_setTexture(platform->sprite, platform->texture, sfFalse);
-    sfSprite_setPosition(platform->sprite, vector_create(80,\
+    sfSprite_setPosition(platform->sprite, vector_create(80, \
     BASIC_PLAYER_Y_POS + 128));
     sfSprite_setColor(platform->sprite, color_create(255, 255, 255, 255));
     sfSprite_setScale(platform->sprite, vector_create(1, 1));
@@ -72,7 +72,7 @@ static text_anim_t *text_anim_init(char *str, char const *font_path, sfColor co)
     for (uint i = 0; str[i]; i++) {
         text_anim->vect[i] = vector_create(1040 + 35 * i, 100);
     }
-    return(text_anim);
+    return (text_anim);
 }
 
 intro_t *intro_init(void)
@@ -84,8 +84,10 @@ intro_t *intro_init(void)
     intro->background[1] = intro_init_background(PATH_BG2);
     intro->background[2] = intro_init_background(PATH_BG3);
     intro->background[3] = intro_init_background(PATH_BG4);
-    intro->text = text_anim_init("PRESS ENTER TO PLAY!", "./oxy.ttf", sfGreen);
-    intro->rgb = text_anim_init("Press S to change skin", "./pus.otf", sfBlack);
+    intro->text = text_anim_init("PRESS ENTER TO PLAY!", \
+    "./font/oxy.ttf", sfGreen);
+    intro->rgb = text_anim_init("Press S to change skin", \
+    "./font/pus.otf", sfBlack);
     intro->platform = intro_init_platform();
     intro->spike = intro_init_spike();
     return (intro);

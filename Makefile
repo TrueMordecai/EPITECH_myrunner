@@ -28,10 +28,13 @@ SRC			=		src/main/main.c									\
 					src/game_loop/display/death_effect_display.c	\
 					src/game_loop/display/background_display.c		\
 					src/game_loop/display/intro_display.c			\
+					src/game_loop/display/intro_display_2.c			\
+					src/game_loop/display/intro_display_3.c			\
 					src/game_loop/input/input.c						\
 					src/tool/create_tool.c							\
 					src/tool/tool_func.c							\
-					src/tool/bool_check_state.c
+					src/tool/bool_check_state.c						\
+					src/tool/str_converter.c
 
 OBJ			=		$(SRC:%c=%o)
 
