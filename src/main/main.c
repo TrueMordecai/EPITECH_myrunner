@@ -36,14 +36,12 @@ static void main_print_help_tag(void)
 
 static void main_print_other(void)
 {
-    my_putstr("KNOWN BUGS\n");
-    my_putstr("    Going to fast with the '>' tag cause the v-portal to bug\n");
-    my_putstr("    Be simultaneously on a '>' and '<' cause block to shift");
-    my_putstr("when you create a map don't do it\n");
+    my_putstr("KNOWN BUGS/WEIRDNESS\n");
     my_putstr("    'J' have an hitbox slightly smaller that you expect\n");
     my_putstr("    Hitbox of 'x' are square and not triangle\n");
     my_putstr("    Sometimes you might think that you should died, and its no");
-    my_putstr("t a bug, i just make the hitbox generous\n\n");
+    my_putstr("t a bug, i just make the hitbox generous\n");
+    my_putstr("THE .H USED TO BE WELL DESCRIBED IN PREVIOUS COMMIT\n");
 }
 
 static int main_print_help(void)

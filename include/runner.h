@@ -24,8 +24,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "my.h"
-
-/// -------- /!\ QoL : Access principals structure. USE ONLY WITH PARAMETER GAME
 #define CORE game->core
 #define RENDER_WINDOW game->core->window
 #define PLAYER game->player
@@ -35,28 +33,17 @@
 #define HUD game->hud
 #define INTRO game->intro
 #define DEATH game->death_effect
-/// ------------------------------------
-
-/// -------- /!\ QoL : Access player informations. USE ONLY WITH PARAMETER GAME
 #define PLAYER_X_SPEED (game->player->vect.x)
 #define PLAYER_Y_SPEED (game->player->vect.y)
 #define PLAYER_LEFT_SIDE (game->player->pos.x)
 #define PLAYER_RIGHT_SIDE (game->player->pos.x + 128)
 #define PLAYER_TOP_SIDE (game->player->pos.y)
 #define PLAYER_BOT_SIDE (game->player->pos.y + 128)
-/// ------------------------------------
-
-/// -------- /!\ QoL : Fast access to map elements during initialization
-/// Only used for initialized brick rect. USE ONLY WITH PARAMETER map, x, y
 #define NORTH map, y - 1, x
 #define EAST map, y, x + 1
 #define SOUTH map, y + 1, x
 #define WEST map, y, x - 1
-/// ------------------------------------
-
-/// -------- /!\ QoL : Access block informations. USE ONLY WITH PARAMETER GAME
 #define EACH_BLOCK_ON_MAP uint i = 0; game->map[i] != NULL; i++
-/// Use the macro below in a "for" loop pair with the macro above
 #define BLOCK game->map[i]
 #define BLOCK_LEFT_SIDE (game->map[i]->pos.x)
 #define BLOCK_RIGHT_SIDE (game->map[i]->pos.x + 128)
@@ -64,9 +51,6 @@
 #define BLOCK_BOT_SIDE (game->map[i]->pos.y + 128)
 #define BLOCK_IS_NOT_SPACE game->map[i]->space == false
 #define BLOCK_IS_SPACE game->map[i]->space == true
-/// ------------------------------------
-
-/// -------- /!\ Information for the game
 #define BASIC_PLAYER_X_SPEED 20
 #define BASIC_PLAYER_Y_SPEED 0
 #define BASIC_PLAYER_JUMP_HEIGHT 27
@@ -80,10 +64,6 @@
 #define BLOCK_SIZE 128
 #define PLAYER_SIZE 128
 #define PLAYER_TEXTURE_PATH "image/cube.png"
-/// ------------------------------------
-
-
-/// -------- /!\ Default key
 #define DEFAULT_JUMP sfKeySpace
 #define DEFAULT_RESTART_LEVEL sfKeyR
 #define DEFAULT_QUIT_LEVEL sfKeyQ
@@ -93,15 +73,9 @@
 #define DEFAULT_CHANGE_COLOR_R sfKeyI
 #define DEFAULT_CHANGE_COLOR_G sfKeyO
 #define DEFAULT_CHANGE_COLOR_B sfKeyP
-/// ---------------------------
-
-/// -------- /!\ Core Information Macro
 #define RESOLUTION_X 1920
 #define RESOLUTION_Y 1080
 #define FRAME_RATE 60
-/// ------------------------------------
-
-/// -------- /!\ Image Path, mostly for the norme
 #define PATH_INTRO_PLATFORM "image/intro_platform.png"
 #define PATH_SPIKE "image/spike.png"
 #define PATH_BG1 "image/intro/background_1.png"
@@ -121,45 +95,31 @@
 #define PATH_EFFECT "image/portal_effect.png"
 #define PATH_BG "image/bg.png"
 #define PATH_DEATH "image/death_effect.png"
-/// ------------------------------------
-
-/// -------- /!\ Macro only used for the norme, i hate to do that
-/// But i don't have any solutions if i want to be efficient.
 #define MISE map_init_set_element
 #define MIT map_init_tileset
 #define CC color_create
 #define GC sfSprite_getColor
 #define X_BLOCK_START_POS (h * 128) + (400 - 128) - starting_position.x * 128
 #define Y_BLOCK_START_POS (v * 128) + (600 - 128) - starting_position.y * 128
-/// ------------------------------------
 typedef struct {
     sfTexture **tex;
     char c;
 } char_tex;
-
-/// Enum for state of the button, PRESS is only for one loop.
 typedef enum {
     UNPRESS = 0,
     PRESS,
     ALREADY_PRESS,
     END_BUTTON_STATE_T,
 } button_state_t;
-
-/// Enum for the block type.
-/// Value below BT_DELIMITER have a phisical hitbox.
-/// Value above BT_DELIMITER_SPE have special comportment
-/// Don't apply color on them.
 typedef enum {
     SCENE_INTRO = 0,
     SCENE_GAME
 } scene_t;
-
 typedef enum {
     R = 0,
     G,
     B
 } RGB_MACROS;
-
 typedef enum {
     BT_BASIC = 0,
     BT_BRICK,
@@ -178,18 +138,15 @@ typedef enum {
     BT_SPE_COINS_FOUND,
     BT_SPE_VICTORY,
 } block_type_t;
-
 typedef struct key_input_s {
     button_state_t key_state;
     sfKeyCode key_code;
 } key_input_t;
-
 typedef struct core_s {
     sfRenderWindow *window;
     sfVideoMode video_mode;
     sfEvent event;
 } core_t;
-
 typedef struct entity_s {
     sfTexture *texture;
     sfSprite *sprite;
@@ -203,7 +160,6 @@ typedef struct entity_s {
     float seconds;
     bool space;
 } entity_t;
-
 typedef struct map_info_s {
     char const *map;
     entity_t *death_effect;
@@ -220,7 +176,6 @@ typedef struct map_info_s {
     sfMusic *mus_map;
     sfMusic **mus_coin;
 } map_info_t;
-
 typedef struct input_s {
     key_input_t *jump;
     key_input_t *reset;
@@ -230,7 +185,6 @@ typedef struct input_s {
     key_input_t *skin_change;
     key_input_t **change_color;
 } input_t;
-
 typedef struct text_anim_s {
     char *str;
     sfText *text_info;
@@ -240,7 +194,6 @@ typedef struct text_anim_s {
     float second;
     int index_up;
 } text_anim_t;
-
 typedef struct intro_s {
     entity_t **background;
     entity_t *platform;
@@ -248,7 +201,6 @@ typedef struct intro_s {
     text_anim_t *text;
     text_anim_t *rgb;
 } intro_t;
-
 typedef struct game_s {
     core_t *core;
     entity_t *background;
@@ -261,7 +213,6 @@ typedef struct game_s {
     input_t *input;
     scene_t scene;
 } game_t;
-
 core_t *core_init(void);
 game_t *game_init(char const *path);
 entity_t *player_init(void);
