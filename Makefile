@@ -12,6 +12,7 @@ SRC			=		src/main/main.c									\
 					src/initialization/game_init.c					\
 					src/initialization/player_init.c				\
 					src/initialization/map_init.c					\
+					src/initialization/map_init2.c					\
 					src/initialization/map_info_init.c				\
 					src/initialization/input_init.c					\
 					src/initialization/background_init.c			\

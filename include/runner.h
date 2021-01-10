@@ -132,6 +132,10 @@
 #define X_BLOCK_START_POS (h * 128) + (400 - 128) - starting_position.x * 128
 #define Y_BLOCK_START_POS (v * 128) + (600 - 128) - starting_position.y * 128
 /// ------------------------------------
+typedef struct {
+    sfTexture **tex;
+    char c;
+} char_tex;
 
 /// Enum for state of the button, PRESS is only for one loop.
 typedef enum {
@@ -303,4 +307,9 @@ char *int_to_str(int i);
 char *char_str(char c);
 void display_intro_text_anim(game_t *game);
 void display_intro_text_rgb(game_t *game);
+char **str_to_array(char *map);
+bool isbrick(char **map, int y, int x);
+sfIntRect map_init_tileset2(char **map, uint x, uint y);
+sfIntRect map_init_tileset(char **map, uint x, uint y);
+void map_init_set_element(entity_t *b, sfTexture *t, sfColor c, block_type_t k);
 #endif
